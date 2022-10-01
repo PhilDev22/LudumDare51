@@ -1,6 +1,8 @@
 extends Node2D
 export var player = "res://Scenes/Player/Player.tscn"
 
+signal game_over
+
 var player0
 var player1
 
@@ -14,8 +16,8 @@ func start_game():
 	# Instantiate player
 	player0 = instantiate_player(0)
 	player1 = instantiate_player(1)
-	player0.connect("collision_with_player", self, "_on_player_collision")
-	player1.connect("collision_with_player", self, "_on_player_collision")
+	player0.connect("collision_with_player", self, "on_player_collision")
+	player1.connect("collision_with_player", self, "on_player_collision")
 	
 
 func instantiate_player(player_nr = 0):
@@ -40,11 +42,12 @@ func instantiate_player(player_nr = 0):
 	return player_spawn
 
 
-func _handle_game_over():
+func handle_game_over():
 	#TODO handle game over
-	print("Game Over!")
 	
+	emit_signal("game_over")
+	print("Game Over!")
 
 
-func _on_player_collision():
-	_handle_game_over()
+func on_player_collision():
+	handle_game_over()
