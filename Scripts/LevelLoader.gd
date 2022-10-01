@@ -1,5 +1,5 @@
 extends Node2D
-export var player = "res://Scenes/Characters/Player.tscn"
+export var player = "res://Scenes/Player/Player.tscn"
 
 
 func _ready():
@@ -22,7 +22,3 @@ func instantiate_player():
 	$InteractiveTerrain.add_child(player_spawn)
 	# Set player at the correct position (spawn point of zone)
 	player_spawn.position = spawn_points[index].position
-	# Make the player face the direction from last movement to create a
-	# "seamless" feel
-	if GameData.zone_load_facing_direction:
-		player_spawn.update_facing(GameData.zone_load_facing_direction)
