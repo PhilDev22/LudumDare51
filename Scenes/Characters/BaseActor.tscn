@@ -71,9 +71,7 @@ tracks/0/keys = {
 "values": [ 3, 4, 5, 4 ]
 }
 
-[node name="BaseActor" type="Node2D" groups=[
-"actors",
-]]
+[node name="BaseActor" type="Node2D" groups=["actors"]]
 position = Vector2( 8, 8 )
 script = ExtResource( 1 )
 __meta__ = {

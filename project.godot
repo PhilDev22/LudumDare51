@@ -24,6 +24,11 @@ GameData="*res://Scripts/Globals/GameData.gd"
 InputSystem="*res://Scripts/Globals/InputSystem.gd"
 UI="*res://Scenes/UI.tscn"
 
+[display]
+
+window/size/width=1280
+window/size/height=720
+
 [input]
 
 ui_left={
