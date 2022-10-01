@@ -53,6 +53,8 @@ func update_facing(direction):
 
 # Smoothly moves actor to target position
 func move_to(target_position):
+	#print("target_position: ", target_position)
+	#print(overworld.world_to_map(position))
 	# Begin movement. Actor is non-interactive while moving.
 	set_process(false)
 	process_movement_animation()
@@ -65,16 +67,17 @@ func move_to(target_position):
 	# transform and it will cause a glitchy animation where the sprite warps
 	# for a single frame to the target location (with the transform) and then
 	# smoothly animates after
-	$Pivot.position = current_pos
+	#$Pivot.position = current_pos
 	# Move the pivot point from the current position to 0,0
 	# (relative to parent transform) basically just catch up with the parent
-	$Tween.interpolate_property($Pivot, "position", current_pos, Vector2(),
-			$AnimationPlayer.current_animation_length, Tween.TRANS_LINEAR,
-			Tween.EASE_IN)
+	# $Tween.interpolate_property($Pivot, "position", current_pos, Vector2(),
+	#		$AnimationPlayer.current_animation_length, Tween.TRANS_LINEAR,
+	#		Tween.EASE_IN)
 	position = target_position
+	#print(overworld.world_to_map(position))
 	# This is basically a "sort y order" option for children (non-cells)
 	set_z_index(position.y)
-	$Tween.start()
+	# $Tween.start()
 
 	# Stop the function execution until the animation finished
 	yield($AnimationPlayer, "animation_finished")

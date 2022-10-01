@@ -5,6 +5,8 @@ enum CELL_TYPES {EMPTY = -1, ACTOR, OBJECT}
 var children
 var stale_children = false
 
+var rng = RandomNumberGenerator.new()
+
 func _ready():
 	process_actor_spawn_conditions()
 	refresh_children()
@@ -48,6 +50,8 @@ func request_move(requesting_object, direction):
 	var cell_start = world_to_map(requesting_object.position)
 	var cell_target = world_to_map(requesting_object.position) + direction
 	var cell_target_type = get_cellv(cell_target)
+	print(cell_start)
+	print(cell_target)
 
 	if cell_target_type == CELL_TYPES.EMPTY:
 		var cell_obj = get_overworld_obj(cell_target)
@@ -81,3 +85,7 @@ func process_actor_spawn_conditions():
 	for obj in get_children():
 		if !obj.spawn_condition():
 			obj.call_deferred("free")
+
+# every 10 seconds
+func _on_Timer_timeout():
+	set_cell(1, 1, rng.randi_range(0,3))

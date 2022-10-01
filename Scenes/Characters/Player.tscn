@@ -3,7 +3,6 @@
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Demo/character.png" type="Texture" id=2]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "bump"
 length = 0.25
@@ -18,7 +17,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.9, 1.1 ), Vector2( 1.1, 0.9 ), Vector2( 1.05, 0.95 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 2, 2 ), Vector2( 1.8, 2.2 ), Vector2( 2.2, 1.8 ), Vector2( 2.1, 1.9 ), Vector2( 1.9, 2.1 ), Vector2( 2, 2 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -72,10 +71,7 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 8 ]
 }
 
-[node name="Player" type="Node2D" groups=[
-"actors",
-]]
-position = Vector2( 8, 8 )
+[node name="Player" type="Node2D" groups=["actors"]]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -90,13 +86,15 @@ anims/walk_up = SubResource( 4 )
 [node name="Pivot" type="Position2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
-position = Vector2( 0, -8 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-vframes = 3
 hframes = 4
+vframes = 3
+frame = 8
 
-[node name="PlayerCamera" type="Camera2D" parent="Pivot"]
-current = true
-zoom = Vector2( 0.2, 0.2 )
+[node name="Polygon2D" type="Polygon2D" parent="Pivot"]
+position = Vector2( -24, -24 )
+color = Color( 1, 1, 1, 0.427451 )
+polygon = PoolVector2Array( 0, 0, 47, 0, 47, 47, 0, 47 )
 
 [node name="Tween" type="Tween" parent="."]
