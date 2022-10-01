@@ -125,6 +125,9 @@ tile_data = PoolIntArray( 0, 12, 0, 1, 12, 0, 2, 12, 0, 3, 12, 0, 4, 12, 0, 5, 1
 [node name="PlayerSpawn" type="Position2D" parent="Non-InteractiveTerrain"]
 position = Vector2( 24, 24 )
 
+[node name="PlayerSpawn2" type="Position2D" parent="Non-InteractiveTerrain"]
+position = Vector2( 714, 201 )
+
 [node name="InteractiveTerrain" type="TileMap" parent="."]
 mode = 2
 tile_set = SubResource( 1 )
