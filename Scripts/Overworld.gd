@@ -5,6 +5,8 @@ enum CELL_TYPES {EMPTY = -1, ACTOR, OBJECT}
 var children
 var stale_children = false
 
+var rng = RandomNumberGenerator.new()
+
 func _ready():
 	process_actor_spawn_conditions()
 	refresh_children()
@@ -83,3 +85,7 @@ func process_actor_spawn_conditions():
 	for obj in get_children():
 		if !obj.spawn_condition():
 			obj.call_deferred("free")
+
+# every 10 seconds
+func _on_Timer_timeout():
+	set_cell(1, 1, rng.randi_range(0,3))
