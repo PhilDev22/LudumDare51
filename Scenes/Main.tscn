@@ -262,7 +262,7 @@ position = Vector2( 24, 24 )
 [node name="PlayerSpawn2" type="Position2D" parent="Non-InteractiveTerrain"]
 position = Vector2( 714, 201 )
 
-[node name="InteractiveTerrain" type="TileMap" parent="."]
+[node name="InteractiveTerrain" type="TileMap" parent="." groups=["Walls"]]
 mode = 2
 tile_set = SubResource( 8 )
 cell_size = Vector2( 48, 48 )
