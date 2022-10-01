@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grasstileset.png-f957233a2d0bbfc209d5727cd90f088c.stex"
+path="res://.import/groundtileset.png-beae81e822f4d96476ce93d2ee6cef9f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/grasstileset.png"
-dest_files=[ "res://.import/grasstileset.png-f957233a2d0bbfc209d5727cd90f088c.stex" ]
+source_file="res://Sprites/groundtileset.png"
+dest_files=[ "res://.import/groundtileset.png-beae81e822f4d96476ce93d2ee6cef9f.stex" ]
 
 [params]
 
