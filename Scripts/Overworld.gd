@@ -85,7 +85,14 @@ func process_actor_spawn_conditions():
 	for obj in get_children():
 		if !obj.spawn_condition():
 			obj.call_deferred("free")
-
+			
+func destroy_wall_on_cell(cell_pos_x, cell_pos_y):
+	var tile_idx = get_cell(cell_pos_x, cell_pos_y)
+	if tile_idx == INVALID_CELL:
+		print("there is no wall on this cell")
+	else:
+		set_cell(cell_pos_x, cell_pos_y, INVALID_CELL)
+		
 # every 10 seconds
 func _on_Timer_timeout():
 	set_cell(1, 1, rng.randi_range(0,3))

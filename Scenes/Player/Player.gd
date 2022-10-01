@@ -15,10 +15,17 @@ func _ready():
 	
 func _physics_process(delta):
 	
-	var direction = InputSystem.input_direction if player_nr == 0 else InputSystem.input_direction_p2
 	velocity = Vector2()
 	
+	var direction
+	if player_nr == 0:
+		direction = InputSystem.input_direction
+	elif player_nr == 1:
+		direction = InputSystem.input_direction_p2
+		
 	if direction:
+		print("moving player: ", player_nr)
+		
 		if direction.x == 1:
 			animated_sprite.set_animation("walk_horizontal") 
 			animated_sprite.flip_h = false
@@ -35,12 +42,15 @@ func _physics_process(delta):
 			animated_sprite.set_animation("walk_up") 
 			animated_sprite.flip_h = false
 			velocity.y -= 1
-		else:
-			if direction == Vector2():
-				animated_sprite.set_animation("idle") 
-		
+			
+	if velocity:
 		velocity = velocity.normalized() * speed
-		
 		velocity = move_and_slide(velocity)
+		collision_objects.clear()
 		for i in get_slide_count():
 			collision_objects.push_back(get_slide_collision(i))
+	else:
+		animated_sprite.set_animation("idle")
+
+func _handle_colllisions():
+	return null
