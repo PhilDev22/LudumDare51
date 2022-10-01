@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/LevelLoader.gd" type="Script" id=1]
 [ext_resource path="res://Demo/demo_tiles.tres" type="TileSet" id=2]
@@ -103,6 +103,9 @@ points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 3
 } ]
 3/z_index = 0
 
+[sub_resource type="BitmapFont" id=6]
+height = 12.0
+
 [node name="LevelBase" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -127,3 +130,14 @@ cell_custom_transform = Transform2D( 48, 0, 0, 48, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 1, 0, 0, 7, 0, 0, 65537, 0, 0, 65543, 0, 0, 131073, 0, 0, 131079, 1, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 2, 0, 131085, 2, 0, 196609, 0, 0, 196615, 0, 0, 262145, 1, 0, 262146, 2, 0, 262147, 2, 0, 262148, 2, 0, 262151, 0, 0, 262155, 0, 0, 327681, 0, 0, 327687, 0, 0, 327691, 1, 0, 327692, 2, 0, 327693, 2, 0, 327694, 2, 0, 327695, 2, 0, 393217, 0, 0, 393227, 0, 0, 458763, 0, 0, 524299, 0, 0, 720901, 3, 0, 720902, 2, 0, 720903, 2, 0, 720904, 2, 0, 720905, 2, 0, 720906, 2, 0, 786437, 0, 0 )
 script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 1207.0
+margin_top = 8.0
+margin_right = 1240.0
+margin_bottom = 37.0
+custom_fonts/mono_font = SubResource( 6 )
+text = "10"
