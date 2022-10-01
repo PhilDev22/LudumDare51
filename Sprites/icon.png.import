@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Overworld.png-b0690980d8960a3430f0e4d265e91a4d.stex"
+path="res://.import/icon.png-f9ba9008f31679cd240e2c5f33a9a4fb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Overworld.png"
-dest_files=[ "res://.import/Overworld.png-b0690980d8960a3430f0e4d265e91a4d.stex" ]
+source_file="res://Sprites/icon.png"
+dest_files=[ "res://.import/icon.png-f9ba9008f31679cd240e2c5f33a9a4fb.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
