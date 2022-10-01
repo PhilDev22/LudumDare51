@@ -35,7 +35,6 @@ func _physics_process(delta):
 		
 	if direction:
 		direction_last = direction
-		print("moving player: ", player_nr)
 
 		if direction.x == 1:
 			animated_sprite.set_animation("walk_horizontal")
