@@ -92,7 +92,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 	get_parent().add_child(destroy)
 	destroy.position = $Node2D/Position2D.global_position
 	if player_nr == 0:
-		destroy.direction = direction_destroy
+		destroy.velocity = direction_destroy
 	elif player_nr == 1:
-		destroy.direction = direction_destroy
+		destroy.velocity = direction_destroy
 	print(destroy.velocity)
