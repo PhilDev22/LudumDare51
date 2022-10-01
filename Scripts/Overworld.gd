@@ -48,6 +48,8 @@ func request_move(requesting_object, direction):
 	var cell_start = world_to_map(requesting_object.position)
 	var cell_target = world_to_map(requesting_object.position) + direction
 	var cell_target_type = get_cellv(cell_target)
+	print(cell_start)
+	print(cell_target)
 
 	if cell_target_type == CELL_TYPES.EMPTY:
 		var cell_obj = get_overworld_obj(cell_target)
