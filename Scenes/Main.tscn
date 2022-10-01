@@ -1,9 +1,48 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/LevelLoader.gd" type="Script" id=1]
-[ext_resource path="res://Demo/demo_tiles.tres" type="TileSet" id=2]
-[ext_resource path="res://Scripts/Overworld.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/walltileset.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/groundtileset.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/walltileset.png" type="Texture" id=3]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 48, 48, 0, 48, 0, 0, 48, 0 )
+
+[sub_resource type="TileSet" id=7]
+0/name = "grass"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 48, 48 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "out_of_bounds"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 48, 0, 48, 48 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape = SubResource( 1 )
+1/shape_one_way = false
+1/shape_one_way_margin = 1.0
+1/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+1/z_index = 0
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 32, 48, 16, 48, 16, 0, 32, 0 )
@@ -17,9 +56,9 @@ points = PoolVector2Array( 48, 32, 0, 32, 0, 16, 48, 16 )
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 32, 32, 32, 32, 48 )
 
-[sub_resource type="TileSet" id=1]
+[sub_resource type="TileSet" id=8]
 0/name = "vertical"
-0/texture = ExtResource( 4 )
+0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 48, 48 )
@@ -40,7 +79,7 @@ points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 3
 } ]
 0/z_index = 0
 1/name = "walltileset.png 1"
-1/texture = ExtResource( 4 )
+1/texture = ExtResource( 3 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 48, 0, 48, 48 )
@@ -61,7 +100,7 @@ points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 3
 } ]
 1/z_index = 0
 2/name = "walltileset.png 2"
-2/texture = ExtResource( 4 )
+2/texture = ExtResource( 3 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 48, 48, 48 )
@@ -82,7 +121,7 @@ points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 3
 } ]
 2/z_index = 0
 3/name = "walltileset.png 3"
-3/texture = ExtResource( 4 )
+3/texture = ExtResource( 3 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 48, 48, 48, 48 )
@@ -103,13 +142,114 @@ points = PoolVector2Array( 16, 48, 16, 48, 16, 32, 16, 16, 32, 16, 48, 16, 48, 3
 } ]
 3/z_index = 0
 
+[sub_resource type="GDScript" id=6]
+script/source = "extends TileMap
+
+enum CELL_TYPES {EMPTY = -1, ACTOR, OBJECT}
+
+var children
+var stale_children = false
+
+var rng = RandomNumberGenerator.new()
+
+func _ready():
+	process_actor_spawn_conditions()
+	refresh_children()
+
+
+# Make sure to call this when necessary
+# We don't want to be getting children everytime an actor tries to move.
+func refresh_children():
+	children = get_children()
+
+
+# Iterate through EVERY object in the overworld and find the right one
+# Could probably be done better
+func get_overworld_obj(coordinates):
+	for node in children:
+		# Protects against certain situations where an object is queued to be
+		# freed
+		if !is_instance_valid(node):
+			stale_children = true
+			continue
+		else:
+			if world_to_map(node.position) == coordinates:
+				return(node)
+	if stale_children:
+		stale_children = false
+		refresh_children()
+
+
+func request_interaction(requesting_object, direction):
+	var cell_start = world_to_map(requesting_object.position)
+	var cell_target = world_to_map(requesting_object.position) + direction
+	var cell_obj = get_overworld_obj(cell_target)
+	if !cell_obj:
+		return
+	if cell_obj.obj_type != CELL_TYPES.ACTOR:
+		return
+	cell_obj.interact()
+
+
+func request_move(requesting_object, direction):
+	var cell_start = world_to_map(requesting_object.position)
+	var cell_target = world_to_map(requesting_object.position) + direction
+	var cell_target_type = get_cellv(cell_target)
+	print(cell_start)
+	print(cell_target)
+
+	if cell_target_type == CELL_TYPES.EMPTY:
+		var cell_obj = get_overworld_obj(cell_target)
+		if cell_obj:
+			if cell_obj.obj_type == CELL_TYPES.OBJECT:
+				cell_obj.do_what_this_object_does()
+				return update_overworld_obj_position(requesting_object,
+						cell_start, cell_target)
+		else:
+			return update_overworld_obj_position(requesting_object,
+					cell_start, cell_target)
+
+func update_overworld_obj_position(requesting_object, cell_start, cell_target):
+	# The cell the moving object was in is now free
+	set_cellv(cell_start, CELL_TYPES.EMPTY)
+
+	# Divide by 2 because location 0,0 starts from the top left of the cell
+	# and we want the object to be \"in the middle\" of the grid cell
+	return map_to_world(cell_target) + cell_size / 2
+
+
+# removes an object from children array. The object should queue_free itself,
+# but we want the overworld to immediately know this cell is no longer occupied
+func remove_from_active(obj):
+	children.erase(obj)
+
+
+# By default design, all potential actors are on scene, and those that do not
+# meet their conditions to be present are removed
+func process_actor_spawn_conditions():
+	for obj in get_children():
+		if !obj.spawn_condition():
+			obj.call_deferred(\"free\")
+			
+func destroy_wall_on_cell(cell_pos_x, cell_pos_y):
+	var tile_idx = get_cell(cell_pos_x, cell_pos_y)
+	if tile_idx == INVALID_CELL:
+		print(\"there is no wall on this cell\")
+	else:
+		set_cell(cell_pos_x, cell_pos_y, INVALID_CELL)
+		
+# every 10 seconds
+func _on_Timer_timeout():
+	set_cell(1, 1, rng.randi_range(0,3))
+"
+
 [node name="LevelBase" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Non-InteractiveTerrain" type="TileMap" parent="."]
 z_index = -4096
 mode = 2
-tile_set = ExtResource( 2 )
+tile_set = SubResource( 7 )
 cell_size = Vector2( 48, 48 )
 cell_custom_transform = Transform2D( 48, 0, 0, 48, 0, 0 )
 cell_y_sort = true
@@ -124,11 +264,11 @@ position = Vector2( 714, 201 )
 
 [node name="InteractiveTerrain" type="TileMap" parent="."]
 mode = 2
-tile_set = SubResource( 1 )
+tile_set = SubResource( 8 )
 cell_size = Vector2( 48, 48 )
 cell_custom_transform = Transform2D( 48, 0, 0, 48, 0, 0 )
 collision_layer = 3
 collision_mask = 2
 format = 1
 tile_data = PoolIntArray( 1, 0, 0, 7, 0, 0, 65537, 0, 0, 65543, 0, 0, 131073, 0, 0, 131079, 1, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 2, 0, 131085, 2, 0, 196609, 0, 0, 196615, 0, 0, 262145, 1, 0, 262146, 2, 0, 262147, 2, 0, 262148, 2, 0, 262151, 0, 0, 262155, 0, 0, 327681, 0, 0, 327687, 0, 0, 327691, 1, 0, 327692, 2, 0, 327693, 2, 0, 327694, 2, 0, 327695, 2, 0, 393217, 0, 0, 393227, 0, 0, 458763, 0, 0, 524299, 0, 0, 720901, 3, 0, 720902, 2, 0, 720903, 2, 0, 720904, 2, 0, 720905, 2, 0, 720906, 2, 0, 786437, 0, 0 )
-script = ExtResource( 3 )
+script = SubResource( 6 )

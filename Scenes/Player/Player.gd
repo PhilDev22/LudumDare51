@@ -24,7 +24,7 @@ func get_class():
 	return "Player"
 	
 func _ready():
-	animated_sprite.set_animation("idle") 
+	animated_sprite.set_animation("idle_down") 
 	animated_sprite.set_playing(true)
 	
 func _physics_process(delta):

@@ -21,8 +21,8 @@ _global_script_class_icons={
 [application]
 
 config/name="2DGridMovement"
-run/main_scene="res://Demo/Main.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://Scenes/Main.tscn"
+config/icon="res://Sprites/icon.png"
 
 [autoload]
 
