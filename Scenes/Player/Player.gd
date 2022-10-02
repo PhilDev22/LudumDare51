@@ -154,6 +154,7 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	timer_build.start()
 	
 	#build_wall.show()
+	build_wall.get_node("AudioStreamPlayer").play()
 	build_wall.get_node("AnimatedSprite").show()
 	build_wall.get_node("AnimatedSprite").play("BuildWall")
 	build_wall.get_node("AnimatedSprite/Tween").interpolate_property(build_wall.get_node("AnimatedSprite"), "modulate", 
@@ -176,3 +177,4 @@ func _reset_build_animation():
 	build_wall.get_node("AnimatedSprite").hide()
 	build_wall.get_node("AnimatedSprite").modulate = Color(1, 1, 1, 1)
 	build_wall.get_node("AnimatedSprite/Tween").reset_all()
+	build_wall.get_node("AudioStreamPlayer").stop()
