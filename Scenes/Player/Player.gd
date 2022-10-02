@@ -50,12 +50,14 @@ func _physics_process(delta):
 			velocity.x -= 1
 			
 		if direction.y == 1:
-			animated_sprite.set_animation("walk_down")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_down")
+				animated_sprite.flip_h = false
 			velocity.y += 1
 		elif direction.y == -1:
-			animated_sprite.set_animation("walk_up")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_up")
+				animated_sprite.flip_h = false
 			velocity.y -= 1
 
 	if not velocity:
@@ -127,7 +129,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		return
 		
 	var destroy = destroy_path.instance()
-	get_parent().add_child(destroy)
+	get_parent().get_parent().add_child(destroy)
 	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
 	print("Player ", player_nr, ": shooting")
