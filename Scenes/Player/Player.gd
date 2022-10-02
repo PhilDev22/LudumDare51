@@ -148,12 +148,9 @@ func _process(delta):
 				or ai_stuck_vector.y > ai_stuck_threshold
 				or ai_stuck_vector.y < -ai_stuck_threshold):
 					
-				print(ai_stuck_vector)
 				direction_ai = -ai_stuck_vector.normalized()
 				
 			ai_stuck_vector = Vector2()
-		
-		
 
 func handle_collisions():
 	for i in collision_objects.size():
@@ -248,7 +245,6 @@ func _on_TimerBuild_timeout():
 
 
 func _reset_build_animation():
-	print("Hallon Welt!")
 	build_wall.get_node("AnimatedSprite").hide()
 	build_wall.get_node("AnimatedSprite").modulate = Color(1, 1, 1, 1)
 	build_wall.get_node("AnimatedSprite/Tween").reset_all()
