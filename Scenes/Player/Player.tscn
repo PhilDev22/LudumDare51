@@ -1,113 +1,61 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/character.png" type="Texture" id=2]
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=29]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 32, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=30]
-atlas = ExtResource( 2 )
-region = Rect2( 32, 64, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 2 )
-region = Rect2( 16, 0, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 2 )
-region = Rect2( 32, 0, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 0, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 32, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 2 )
-region = Rect2( 16, 32, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 2 )
-region = Rect2( 32, 32, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 32, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 64, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=26]
-atlas = ExtResource( 2 )
-region = Rect2( 16, 64, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=27]
-atlas = ExtResource( 2 )
-region = Rect2( 32, 64, 16, 32 )
-
-[sub_resource type="AtlasTexture" id=28]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 64, 16, 32 )
+[ext_resource path="res://Sprites/Player/1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/5.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/6.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/7.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/4.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/8.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/9.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Player/3.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Player/2.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Objects/BuildWall.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 16 ) ],
+"frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "idle_down",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 29 ) ],
+"frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "idle_horizontal",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 30 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "idle_up",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "walk_down",
-"speed": 5.0
+"speed": 7.0
 }, {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "walk_horizontal",
-"speed": 5.0
+"speed": 7.0
 }, {
-"frames": [ SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 10 ), ExtResource( 2 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "walk_up",
-"speed": 5.0
+"speed": 7.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 21, 13 )
+extents = Vector2( 30, 13 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+speed = 300
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -24, -56 )
-scale = Vector2( 3, 3 )
+position = Vector2( 0, -17 )
 frames = SubResource( 15 )
-animation = "idle_down"
-centered = false
+animation = "walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 12 )
@@ -123,6 +71,8 @@ one_shot = true
 
 [node name="WeaponPosition2D" type="Position2D" parent="."]
 position = Vector2( 0, -16 )
+
+[node name="BuildWall" parent="." instance=ExtResource( 11 )]
 
 [connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
 [connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]

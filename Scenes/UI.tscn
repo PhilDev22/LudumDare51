@@ -76,6 +76,11 @@ margin_bottom = 703.0
 rect_pivot_offset = Vector2( -371, -388 )
 texture = ExtResource( 5 )
 
+[node name="CooldownRect" type="ColorRect" parent="AbilityShootPlayer1"]
+margin_right = 63.0
+margin_bottom = 63.0
+color = Color( 0.00784314, 0, 0, 0.815686 )
+
 [node name="AbilityShootPlayer2" type="TextureRect" parent="."]
 margin_left = 1102.0
 margin_top = 640.0
@@ -83,6 +88,11 @@ margin_right = 1165.0
 margin_bottom = 703.0
 rect_pivot_offset = Vector2( -371, -388 )
 texture = ExtResource( 5 )
+
+[node name="CooldownRect" type="ColorRect" parent="AbilityShootPlayer2"]
+margin_right = 64.0
+margin_bottom = 64.0
+color = Color( 0.00784314, 0, 0, 0.815686 )
 
 [node name="AbilityBuildPlayer1" type="TextureRect" parent="."]
 margin_left = 105.0
@@ -92,6 +102,11 @@ margin_bottom = 703.0
 rect_pivot_offset = Vector2( -443.464, -388 )
 texture = ExtResource( 4 )
 
+[node name="CooldownRect" type="ColorRect" parent="AbilityBuildPlayer1"]
+margin_right = 64.0
+margin_bottom = 64.0
+color = Color( 0.00784314, 0, 0, 0.815686 )
+
 [node name="AbilityBuildPlayer2" type="TextureRect" parent="."]
 margin_left = 1180.0
 margin_top = 639.0
@@ -99,3 +114,8 @@ margin_right = 1243.0
 margin_bottom = 702.0
 rect_pivot_offset = Vector2( -443.464, -388 )
 texture = ExtResource( 4 )
+
+[node name="CooldownRect" type="ColorRect" parent="AbilityBuildPlayer2"]
+margin_right = 64.0
+margin_bottom = 64.0
+color = Color( 0.00784314, 0, 0, 0.815686 )

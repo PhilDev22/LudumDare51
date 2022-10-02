@@ -14,6 +14,7 @@ signal action_build
 onready var animated_sprite = $AnimatedSprite
 onready var timer_shoot = $TimerShoot
 onready var timer_build = $TimerBuild
+onready var build_wall = $BuildWall
 
 var velocity = Vector2()
 var direction
@@ -27,6 +28,9 @@ func get_class():
 func _ready():
 	animated_sprite.set_animation("idle_down") 
 	animated_sprite.set_playing(true)
+	build_wall.get_node("AnimatedSprite").hide()
+	build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
+
 	
 func _physics_process(delta):
 	
@@ -50,12 +54,14 @@ func _physics_process(delta):
 			velocity.x -= 1
 			
 		if direction.y == 1:
-			animated_sprite.set_animation("walk_down")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_down")
+				animated_sprite.flip_h = false
 			velocity.y += 1
 		elif direction.y == -1:
-			animated_sprite.set_animation("walk_up")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_up")
+				animated_sprite.flip_h = false
 			velocity.y -= 1
 
 	if not velocity:
@@ -127,7 +133,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		return
 		
 	var destroy = destroy_path.instance()
-	get_parent().add_child(destroy)
+	get_parent().get_parent().add_child(destroy)
 	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
 	print("Player ", player_nr, ": shooting")
@@ -147,6 +153,16 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	emit_signal("action_build", player_nr)
 	timer_build.start()
 	
+	#build_wall.show()
+	build_wall.get_node("AudioStreamPlayer").play()
+	build_wall.get_node("AnimatedSprite").show()
+	build_wall.get_node("AnimatedSprite").play("BuildWall")
+	build_wall.get_node("AnimatedSprite/Tween").interpolate_property(build_wall.get_node("AnimatedSprite"), "modulate", 
+	  Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.8, 
+	  Tween.TRANS_LINEAR, Tween.EASE_IN)
+	build_wall.get_node("AnimatedSprite/Tween").start()
+	
+	
 
 func _on_TimerShoot_timeout():
 	pass # Replace with function body.
@@ -156,4 +172,9 @@ func _on_TimerBuild_timeout():
 	pass # Replace with function body.
 
 
-
+func _reset_build_animation():
+	print("Hallon Welt!")
+	build_wall.get_node("AnimatedSprite").hide()
+	build_wall.get_node("AnimatedSprite").modulate = Color(1, 1, 1, 1)
+	build_wall.get_node("AnimatedSprite/Tween").reset_all()
+	build_wall.get_node("AudioStreamPlayer").stop()
