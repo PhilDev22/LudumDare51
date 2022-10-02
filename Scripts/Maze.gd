@@ -53,7 +53,8 @@ func _ready():
 	update_wall_grid()
 	update_tileset_grid()
 	update_tiles()
-	#print_maze()
+	
+	get_node("/root/UI/Timer").connect("timeout", self, "change_maze")
 
 
 func iterative_dfs():
@@ -143,6 +144,16 @@ func swiss_cheese():
 			if y < num_cells_y - 1 and cells[x][y][1] \
 					and rng.randf() < swiss_cheese_factor:
 				cells[x][y][1] = false
+				
+
+func change_maze():
+	var players = $"TileMapWalls".get_children()
+	if len(players) != 2:
+		print(len(players))
+		print("change maze called without players being present")
+		return
+	else:
+		print("changing maze")
 
 	
 func remove_wall(x1, y1, x2, y2):
