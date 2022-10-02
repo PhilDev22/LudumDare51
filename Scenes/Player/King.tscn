@@ -1,0 +1,80 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/King/8.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/King/9.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/King/4.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/King/5.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/King/7.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/King/6.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/King/1.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/King/2.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/King/3.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Objects/BuildWall.tscn" type="PackedScene" id=11]
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "idle_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "idle_horizontal",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle_up",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk_down",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "walk_horizontal",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk_up",
+"speed": 7.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 13 )
+
+[node name="King" type="KinematicBody2D"]
+script = ExtResource( 1 )
+speed = 300
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -17 )
+frames = SubResource( 15 )
+animation = "walk_up"
+frame = 3
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 12 )
+shape = SubResource( 1 )
+
+[node name="TimerShoot" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="TimerBuild" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="WeaponPosition2D" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
+
+[node name="BuildWall" parent="." instance=ExtResource( 11 )]
+
+[connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
+[connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]
