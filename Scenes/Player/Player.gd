@@ -28,10 +28,10 @@ var rng
 var direction_ai = Vector2(1, 0)
 var other_player
 var ai_stuck_timer = 0
-var ai_stuck_timer_max = 0.02
+var ai_stuck_timer_max = 0.05
 var ai_stuck_vector = Vector2()
-var ai_stuck_threshold = 2
-var ai_player_influence_distance = 150
+var ai_stuck_threshold = 3
+var ai_player_influence_distance = 300
 
 func get_class():
 	return "Player"
