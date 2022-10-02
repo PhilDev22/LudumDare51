@@ -5,11 +5,11 @@ const speed = 500
 signal collision_with_wall
 
 var velocity = Vector2(0, 1)  # (1,0)-right, (0,1)-down, (0,-1)-up, ...
-var max_distance = GameData.tile_size * 20
+var max_distance = GameData.tile_size * 100
 var current_distance =  Vector2(0, 0)
 
 func _ready():
-	$AnimatedSprite.play("Spikes")
+	$AnimatedSprite.play("spikes")
 	if velocity.x > 0:
 		$AnimatedSprite.flip_h = true
 	elif velocity.x < 0:
