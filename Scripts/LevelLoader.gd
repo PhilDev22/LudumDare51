@@ -23,7 +23,7 @@ func start_game():
 func instantiate_player(player_nr = 0):
 	# This sets the player to appear at the correct area when loading into a new
 	# zone
-	var spawn_points = $"Non-InteractiveTerrain".get_children()
+	var spawn_points = $"SpawnPoints".get_children()
 	var index = player_nr
 
 	# If we somehow don't have that spawn point, fall back to 0
@@ -35,7 +35,7 @@ func instantiate_player(player_nr = 0):
 	var player_spawn = load(player).instance()
 	player_spawn.player_nr = player_nr
 	
-	$InteractiveTerrain.add_child(player_spawn)
+	$Maze.add_child(player_spawn)
 	# Set player at the correct position (spawn point of zone)
 	player_spawn.position = spawn_points[index].position
 	
