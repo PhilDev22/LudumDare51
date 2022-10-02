@@ -50,14 +50,21 @@ func _ready():
 # warning-ignore:return_value_discarded
 	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
 	
-	# connect destroy and build signals
-	
 
-func _on_destroy():
-	print("destroy connected")
+func _on_destroy(position, velocity):
+	# upward shots have collisions slightly below the correct wall grid tile
+	# due to the hitboxes of the tilemap
+	if velocity.y < 0:
+		position -= Vector2(0, 24)
+
+	var wall_index = global_position_to_wall_grid(position)
+	
+	remove_wall_from_grid_if_allowed(wall_index)
+	update_tileset_grid()
+	update_tiles()
 	
 	
-func _on_build():
+func _on_build(player_nr, position, direction_player):
 	print("build connected")
 	
 

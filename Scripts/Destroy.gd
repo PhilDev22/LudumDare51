@@ -1,11 +1,11 @@
 extends KinematicBody2D
 
-const speed = 500
+const speed = 800
 
 signal collision_with_wall
 
 var velocity = Vector2(0, 1)  # (1,0)-right, (0,1)-down, (0,-1)-up, ...
-var max_distance = GameData.tile_size * 2
+var max_distance = GameData.tile_size * 20
 var current_distance =  Vector2(0, 0)
 
 func _physics_process(delta):
