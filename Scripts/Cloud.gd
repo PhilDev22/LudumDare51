@@ -1,6 +1,14 @@
 extends Node2D
 
 
+var pos_out = Vector2.ZERO
+var pos_in = Vector2.ZERO
+var animation_dur_in = 2.0  # duration of animation in sec
+var animation_dur_out = 1.5  # duration of animation in sec
+var cloud_size = rand_range(0.4, 0.5)
+var offset = 200  # offset in px of clouds spanning outside screen
+
+
 func _ready():
 	# Select cloud sprite randomly
 	var rng = RandomNumberGenerator.new()
@@ -9,31 +17,37 @@ func _ready():
 	var sprites = [$Cloud1, $Cloud2, $Cloud3, $Cloud4, $Cloud5]
 	sprites[cloud_selection].visible = true
 	# Select cloud size randomly
-	var cloud_size = rand_range(0.2, 0.25)
 	sprites[cloud_selection].scale = Vector2(cloud_size, cloud_size)
 
 
-func _process(delta):
-	if Input.is_action_just_pressed("build"):
-		move_out()
+func move() -> void:
+	var tween = get_node("Tween")
 
+	var window_width = ProjectSettings.get_setting("display/window/size/width")
 
-func move_out() -> void:
-	var tween := create_tween()
-	
-	randomize()  # activate random numbers
-	var start_x = rand_range(0, 1280)
-	var start_y = rand_range(0, 720)
-	global_position = Vector2(start_x, start_y)  # change position of sprite
-
-	var final_x = 0	
-	var final_pos = Vector2(final_x, start_y)
-	if start_x > 640:
-		final_x = 1500
+	var x_in = 0
+	if pos_out[0] <= 0:
+		x_in = pos_out[0] + window_width/2 + offset
 	else:
-		final_x = -200
-	final_pos = Vector2(final_x, start_y)
+		x_in = pos_out[0] - window_width/2 - offset
+		
+	pos_in = Vector2(x_in, pos_out[1])
 
-	var animation_dur = 3.0  # duration of animation in sec
-	# Object to animate = self (sprite which the script is attached to), global position of sprite, final value, animation duration
-	tween.tween_property(self, "global_position", final_pos, animation_dur) 
+	tween.interpolate_property(self, "global_position", pos_out, pos_in, animation_dur_in, Tween.TRANS_LINEAR)  # tween_property
+	tween.start()
+
+
+func _on_Tween_tween_completed(object, key):
+	get_tree().change_scene("res://Scenes/Main.tscn")
+	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur_out, Tween.TRANS_LINEAR)  # tween_property
+	$Tween2.start()
+
+#func _on_Tween_tween_completed(object, key):
+#	$Timer.start()
+#
+#
+#func _on_Timer_timeout():
+#	$Timer.stop()
+#	get_tree().change_scene("res://Scenes/Main.tscn")
+#	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur, Tween.TRANS_LINEAR)  # tween_property
+#	$Tween2.start()
