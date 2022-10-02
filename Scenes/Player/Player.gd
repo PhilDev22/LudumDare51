@@ -13,7 +13,7 @@ signal action_build
 
 onready var animated_sprite = $AnimatedSprite
 onready var timer_shoot = $TimerShoot
-onready var timer_build= $TimerBuild
+onready var timer_build = $TimerBuild
 
 var velocity = Vector2()
 var direction
@@ -48,7 +48,8 @@ func _physics_process(delta):
 			animated_sprite.set_animation("walk_horizontal")
 			animated_sprite.flip_h = true
 			velocity.x -= 1
-		elif direction.y == 1:
+			
+		if direction.y == 1:
 			animated_sprite.set_animation("walk_down")
 			animated_sprite.flip_h = false
 			velocity.y += 1
@@ -81,6 +82,9 @@ func _physics_process(delta):
 
 
 func _process(delta):
+	
+	# set_z_index(position.y)
+	
 	if player_nr == 0:
 		if InputSystem.input_destroy:
 			if InputSystem.input_direction != Vector2(0, 0):
@@ -94,7 +98,7 @@ func _process(delta):
 			else:
 				direction_action = direction_last
 			build(player_nr, direction_action)
-			
+
 	if player_nr == 1:
 		if InputSystem.input_destroy_p2:
 			if InputSystem.input_direction_p2 != Vector2(0, 0):
@@ -117,16 +121,39 @@ func handle_collisions():
 
 
 func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
+	
+	if not timer_shoot.is_stopped():
+		print("Player ", player_nr, ": shooting cooldown still active")
+		return
+		
 	var destroy = destroy_path.instance()
 	get_parent().add_child(destroy)
-	destroy.position = $Node2D/Position2D.global_position
+	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
+	print("Player ", player_nr, ": shooting")
 	emit_signal("action_destroy", player_nr)
+	timer_shoot.start()
 	
 	
 func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
-	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
-	interactive_terrain.add_wall_behind_player(position.x, position.y, direction_player)
-	print("Player ", player_nr, " is building")
-	emit_signal("action_build", player_nr)
 	
+	if not timer_build.is_stopped():
+		print("Player ", player_nr, ": building cooldown still active")
+		return
+		
+	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
+	#interactive_terrain.add_wall_behind_player(position.x, position.y, direction_player)
+	print("Player ", player_nr, ": building wall")
+	emit_signal("action_build", player_nr)
+	timer_build.start()
+	
+
+func _on_TimerShoot_timeout():
+	pass # Replace with function body.
+	
+
+func _on_TimerBuild_timeout():
+	pass # Replace with function body.
+
+
+
