@@ -117,5 +117,12 @@ shape = SubResource( 1 )
 [node name="Position2D" type="Position2D" parent="Node2D"]
 
 [node name="TimerShoot" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 
 [node name="TimerBuild" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
+[connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]
