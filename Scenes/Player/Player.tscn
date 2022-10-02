@@ -45,7 +45,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 26.5, 13 )
+extents = Vector2( 30, 13 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -54,11 +54,10 @@ speed = 300
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -17 )
 frames = SubResource( 15 )
-animation = "walk_horizontal"
-frame = 1
+animation = "walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1.5, 12 )
+position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
 [node name="TimerShoot" type="Timer" parent="."]
