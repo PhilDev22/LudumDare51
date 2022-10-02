@@ -35,7 +35,7 @@ func instantiate_player(player_nr = 0):
 	var player_spawn = load(player).instance()
 	player_spawn.player_nr = player_nr
 	
-	$Maze.add_child(player_spawn)
+	$"Maze/TileMapWalls".add_child(player_spawn)
 	# Set player at the correct position (spawn point of zone)
 	player_spawn.position = spawn_points[index].position
 	
