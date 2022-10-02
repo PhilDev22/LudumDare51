@@ -1,8 +1,8 @@
 extends Node
 
 
-var tiles_horizontal = 25
-var tiles_vertical = 13
+var tiles_horizontal = 27
+var tiles_vertical = 15
 
 var num_cells_x = int(tiles_horizontal / 2)
 var num_cells_y = int(tiles_vertical / 2)
