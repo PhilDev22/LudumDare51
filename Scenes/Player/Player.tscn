@@ -70,7 +70,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="WeaponPosition2D" type="Position2D" parent="."]
-position = Vector2( 0, -16 )
+position = Vector2( 0, 16 )
 
 [node name="BuildWall" parent="." instance=ExtResource( 11 )]
 
