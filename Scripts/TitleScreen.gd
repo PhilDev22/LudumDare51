@@ -6,7 +6,7 @@ const cloud_path = preload("res://Scenes/Objects/Cloud.tscn")
 var pos_x = []
 var pos_y = []
 var positions = get_grid()
-var jitter = 2  # add jitter in range [-jitter, jitter] randomly to grid xy-positions
+var jitter = 15  # add jitter in range [-jitter, jitter] randomly to grid xy-positions
 
 
 func get_grid():
@@ -15,7 +15,7 @@ func get_grid():
 	var offset = 200  # offset in px of clouds spanning outside screen
 
 	var step_size_y = 100  # difference in y positions
-	var step_size_x = 100
+	var step_size_x = 120
 	
 	# get x pos on grid
 	# left: 1280 + offset bis 1280 + offset + 640
@@ -62,3 +62,7 @@ func get_clouds(pos_x, pos_y):
 			cloud.pos_out = Vector2(x, y)
 			y_sort.add_child(cloud)
 			cloud.move()
+
+
+func _on_Button2_pressed():
+	print("Button2")

@@ -3,8 +3,9 @@ extends Node2D
 
 var pos_out = Vector2.ZERO
 var pos_in = Vector2.ZERO
-var animation_dur = 2.0  # duration of animation in sec
-var cloud_size = rand_range(0.3, 0.4)
+var animation_dur_in = 2.0  # duration of animation in sec
+var animation_dur_out = 1.5  # duration of animation in sec
+var cloud_size = rand_range(0.4, 0.5)
 var offset = 200  # offset in px of clouds spanning outside screen
 
 
@@ -32,16 +33,21 @@ func move() -> void:
 		
 	pos_in = Vector2(x_in, pos_out[1])
 
-	tween.interpolate_property(self, "global_position", pos_out, pos_in, animation_dur, Tween.TRANS_LINEAR)  # tween_property
+	tween.interpolate_property(self, "global_position", pos_out, pos_in, animation_dur_in, Tween.TRANS_LINEAR)  # tween_property
 	tween.start()
 
 
 func _on_Tween_tween_completed(object, key):
-	$Timer.start()
-
-
-func _on_Timer_timeout():
-	$Timer.stop()
 	get_tree().change_scene("res://Scenes/Main.tscn")
-	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur, Tween.TRANS_LINEAR)  # tween_property
+	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur_out, Tween.TRANS_LINEAR)  # tween_property
 	$Tween2.start()
+
+#func _on_Tween_tween_completed(object, key):
+#	$Timer.start()
+#
+#
+#func _on_Timer_timeout():
+#	$Timer.stop()
+#	get_tree().change_scene("res://Scenes/Main.tscn")
+#	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur, Tween.TRANS_LINEAR)  # tween_property
+#	$Tween2.start()

@@ -25,13 +25,6 @@ rect_scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 stretch_mode = 4
 
-[node name="Button" type="Button" parent="."]
-margin_right = 448.0
-margin_bottom = 83.0
-custom_fonts/font = ExtResource( 2 )
-text = "New Game"
-icon_align = 1
-
 [node name="Image" type="TextureRect" parent="."]
 margin_left = 120.0
 margin_top = 577.0
@@ -46,4 +39,24 @@ margin_top = 80.0
 margin_right = 1160.0
 margin_bottom = 640.0
 
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.2
+anchor_right = 0.5
+margin_right = 10.0
+margin_bottom = 83.0
+custom_fonts/font = ExtResource( 2 )
+text = "New Game"
+icon_align = 1
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 0.2
+anchor_right = 0.5
+margin_right = 12.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 2 )
+text = "How to Play"
+
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
