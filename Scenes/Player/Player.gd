@@ -12,6 +12,8 @@ signal action_destroy
 signal action_build
 
 onready var animated_sprite = $AnimatedSprite
+onready var timer_shoot = $TimerShoot
+onready var timer_build= $TimerBuild
 
 var velocity = Vector2()
 var direction
@@ -124,8 +126,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 	
 func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
-	var pos = $Node2D/Position2D.global_position
-	interactive_terrain.add_wall_behind_player(pos.x, pos.y, direction_player)
+	interactive_terrain.add_wall_behind_player(position.x, position.y, direction_player)
 	print("Player ", player_nr, " is building")
 	emit_signal("action_build", player_nr)
 	
