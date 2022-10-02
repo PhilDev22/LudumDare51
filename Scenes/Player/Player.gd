@@ -129,7 +129,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		return
 		
 	var destroy = destroy_path.instance()
-	get_parent().add_child(destroy)
+	get_parent().get_parent().add_child(destroy)
 	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
 	print("Player ", player_nr, ": shooting")
