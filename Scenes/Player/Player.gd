@@ -6,6 +6,7 @@ const destroy_path = preload("res://Scenes/Objects/Destroy.tscn")
 
 export (int) var player_nr = 0
 export (int) var speed = 200
+export (bool) var is_ai = false
 
 signal collision_with_player
 signal action_destroy
@@ -20,7 +21,12 @@ var velocity = Vector2()
 var direction
 var direction_action = Vector2(0, 1)
 var direction_last = Vector2(0,1)
+var direction_ai = Vector2(1, 1)
 var collision_objects = []
+var rng 
+
+var ai_update_timer = 0
+var ai_update_timer_max = 0.1
 
 func get_class():
 	return "Player"
@@ -30,7 +36,9 @@ func _ready():
 	animated_sprite.set_playing(true)
 	build_wall.get_node("AnimatedSprite").hide()
 	build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
-
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
 	
 func _physics_process(delta):
 	
@@ -40,6 +48,9 @@ func _physics_process(delta):
 		direction = InputSystem.input_direction
 	elif player_nr == 1:
 		direction = InputSystem.input_direction_p2
+		
+	if is_ai:
+		direction = direction_ai
 		
 	if direction:
 		direction_last = direction
@@ -89,8 +100,6 @@ func _physics_process(delta):
 
 func _process(delta):
 	
-	# set_z_index(position.y)
-	
 	if player_nr == 0:
 		if InputSystem.input_destroy:
 			if InputSystem.input_direction != Vector2(0, 0):
@@ -118,12 +127,20 @@ func _process(delta):
 			else:
 				direction_action = direction_last
 			build(player_nr, direction_action)
+			
+	if is_ai and not velocity:
+		ai_update_timer += delta
+		if ai_update_timer >= ai_update_timer_max:
+			ai_update_timer = 0
+			update_ai_direction()
 
 func handle_collisions():
 	for i in collision_objects.size():
 		var collision_obj = collision_objects[i].collider
 		if collision_obj.get_class() == "Player":
 			emit_signal("collision_with_player")
+		elif is_ai and collision_obj.is_in_group("Walls"):
+			update_ai_direction()
 
 
 func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
@@ -163,7 +180,18 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	build_wall.get_node("AnimatedSprite/Tween").start()
 	
 	
-
+func update_ai_direction():
+	
+	var rand_x = randi() % 3 -1
+	var rand_y = randi() % 3 -1
+		
+	direction_ai = Vector2(
+		rand_x, 
+		rand_y)
+		
+	print("Update AI direction: ", direction_ai)
+	
+	
 func _on_TimerShoot_timeout():
 	pass # Replace with function body.
 	
@@ -178,3 +206,4 @@ func _reset_build_animation():
 	build_wall.get_node("AnimatedSprite").modulate = Color(1, 1, 1, 1)
 	build_wall.get_node("AnimatedSprite/Tween").reset_all()
 	build_wall.get_node("AudioStreamPlayer").stop()
+		
