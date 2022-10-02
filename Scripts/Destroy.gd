@@ -32,7 +32,7 @@ func _physics_process(delta):
 	var collider = collision_info.collider;
 	if collider.is_in_group("Walls"):
 		# destroy wall
-		emit_signal("collision_with_wall", global_position, velocity)
+		emit_signal("collision_with_wall", collision_info.position, velocity)
 		#var target_pos = (position + (velocity * GameData.tile_half_size)) / GameData.tile_size
 		#collision_info.collider.destroy_wall_on_cell(target_pos.x, target_pos.y)
 		# destroy self

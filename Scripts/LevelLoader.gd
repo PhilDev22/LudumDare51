@@ -24,7 +24,7 @@ func start_game():
 	player1.connect("collision_with_player", self, "on_player_collision")
 	player1.player_nr = 1
 	player1.position = spawn_points[1].position
-	player1.is_ai = true
+	player1.is_ai = false
 	
 	player0.other_player = player1
 	player1.other_player = player0
