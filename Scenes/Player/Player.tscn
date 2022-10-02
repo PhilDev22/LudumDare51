@@ -100,23 +100,18 @@ animations = [ {
 extents = Vector2( 19, 12.5 )
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( -2, -13 )
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 5.96046e-08, -17 )
+position = Vector2( -26, -75 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 15 )
 animation = "idle_horizontal"
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2 )
+position = Vector2( 1.90735e-06, -10 )
 shape = SubResource( 1 )
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 3, -6 )
-
-[node name="WeaponPosition2D" type="Position2D" parent="Node2D"]
 
 [node name="TimerShoot" type="Timer" parent="."]
 wait_time = 3.0
@@ -125,6 +120,9 @@ one_shot = true
 [node name="TimerBuild" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="WeaponPosition2D" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
 
 [connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
 [connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]
