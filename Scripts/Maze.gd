@@ -54,7 +54,7 @@ func _ready():
 	update_tileset_grid()
 	update_tiles()
 	
-	get_node("/root/UI/Timer").connect("timeout", self, "change_maze")
+	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
 
 
 func iterative_dfs():

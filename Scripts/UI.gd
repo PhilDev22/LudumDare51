@@ -1,10 +1,10 @@
 extends CanvasLayer
 
-onready var animation_player = $AnimationPlayer
-onready var ability_shoot_p0 = $AbilityShootPlayer1
-onready var ability_build_p0 = $AbilityBuildPlayer1
-onready var ability_shoot_p1 = $AbilityShootPlayer2
-onready var ability_build_p1 = $AbilityBuildPlayer2
+onready var animation_player = $IngameUI/AnimationPlayer
+onready var ability_shoot_p0 = $IngameUI/AbilityShootPlayer1
+onready var ability_build_p0 = $IngameUI/AbilityBuildPlayer1
+onready var ability_shoot_p1 = $IngameUI/AbilityShootPlayer2
+onready var ability_build_p1 = $IngameUI/AbilityBuildPlayer2
 
 func _ready():
 	ability_shoot_p0.get_node("CooldownRect").visible = false
