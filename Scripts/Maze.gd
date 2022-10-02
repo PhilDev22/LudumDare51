@@ -8,22 +8,22 @@ var num_cells_x = int(tiles_horizontal / 2)
 var num_cells_y = int(tiles_vertical / 2)
 
 var tiles = [
-	null,
+	-1,
 	1,
-	5,
 	3,
+	4,
 	0,
 	10,
-	null,
+	12,
 	9,
 	2,
-	null,
+	13,
 	11,
 	7,
-	4,
+	5,
 	8,
 	6,
-	null
+	14
 ]
 
 var cells = []
@@ -37,6 +37,31 @@ export var swiss_cheese_factor = 0.15
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	reset_cells()
+	iterative_dfs()
+	swiss_cheese()
+	update_wall_grid()
+	update_tileset_grid()
+	update_tiles()
+	
+# warning-ignore:return_value_discarded
+	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
+	
+	# connect destroy and build signals
+	
+
+func _on_destroy():
+	print("destroy connected")
+	
+	
+func _on_build():
+	print("build connected")
+	
+
+func reset_cells():
 	# initialize cells with status (visited, wall_down, wall_right)
 	# set to (false, true, true)
 	cells = []
@@ -44,16 +69,6 @@ func _ready():
 		cells.append([])
 		for _j in range(num_cells_y):
 			cells[i].append([false, true, true])
-	
-	rng = RandomNumberGenerator.new()
-	rng.randomize()
-	
-	iterative_dfs()
-	swiss_cheese()
-	update_wall_grid()
-	update_tileset_grid()
-	update_tiles()
-	#print_maze()
 
 
 func iterative_dfs():
@@ -143,6 +158,66 @@ func swiss_cheese():
 			if y < num_cells_y - 1 and cells[x][y][1] \
 					and rng.randf() < swiss_cheese_factor:
 				cells[x][y][1] = false
+				
+
+func change_maze():
+	var players = $"TileMapWalls".get_children()
+	if len(players) != 2:
+		print(len(players))
+		print("change maze called without players being present")
+		return
+	
+	reset_cells()
+	iterative_dfs()
+	swiss_cheese()
+	update_wall_grid()
+	
+	# calc player position and remove respective tiles
+	for player in players:
+		var coll = player.get_node("CollisionShape2D")
+		var pos = coll.position + player.get_global_position()
+		# substract one from extends to account for "near" collisions
+		var ext = coll.get_shape().extents - Vector2.ONE
+		var corners = [
+			pos - ext,
+			pos + ext,
+			pos + ext.reflect(Vector2(1, 0)),
+			pos + ext.reflect(Vector2(0, 1))
+		]
+		for corner in corners:
+			var grid_vec = global_position_to_wall_grid(corner)
+			remove_wall_from_grid_if_allowed(grid_vec)
+			
+	update_tileset_grid()
+	update_tiles()
+	
+	
+func remove_wall_from_grid_if_allowed(index_vec: Vector2):
+	# check if fixed sidewall or no wall. return true if a wall was deleted
+	var x = int(index_vec.x)
+	var y = int(index_vec.y)
+	if x <= 1 or x >= len(wall_grid) - 2 \
+			or y <= 1 or y >= len(wall_grid[0]) - 2 \
+			or not wall_grid[x][y]:
+		return false
+	else:
+		wall_grid[x][y] = false
+		return true
+
+
+func global_position_to_wall_grid(pos: Vector2):
+#	print("global: " + str(pos))
+	# move global pos vector into TileMap's local space
+	pos = pos - $TileMapWalls.get_global_position()
+#	print("tilemap: " + str(pos))
+	# move local pos into wall grid's local space (half tile offset)
+	pos += $TileMapWalls.cell_size * 0.5
+#	print("wallgrid: " + str(pos))
+	# calculate corresponding grid cell
+	pos = (pos / $TileMapWalls.cell_size).floor()
+#	print("wall index: " + str(grid_pos))
+	
+	return pos
 
 	
 func remove_wall(x1, y1, x2, y2):

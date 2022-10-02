@@ -19,6 +19,10 @@ func start_game():
 	player0.connect("collision_with_player", self, "on_player_collision")
 	player1.connect("collision_with_player", self, "on_player_collision")
 	
+	player0.other_player = player1
+	player1.other_player = player0
+	
+	UI.connect_signals()
 
 func instantiate_player(player_nr = 0):
 	# This sets the player to appear at the correct area when loading into a new

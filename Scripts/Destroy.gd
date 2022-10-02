@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 const speed = 500
 
+signal collision_with_wall
+
 var velocity = Vector2(0, 1)  # (1,0)-right, (0,1)-down, (0,-1)-up, ...
 var max_distance = GameData.tile_size * 2
 var current_distance =  Vector2(0, 0)
@@ -22,7 +24,8 @@ func _physics_process(delta):
 	var collider = collision_info.collider;
 	if collider.is_in_group("Walls"):
 		# destroy wall
-		var target_pos = (position + (velocity * GameData.tile_half_size)) / GameData.tile_size
+		emit_signal("collision_with_wall", position, velocity)
+		#var target_pos = (position + (velocity * GameData.tile_half_size)) / GameData.tile_size
 		#collision_info.collider.destroy_wall_on_cell(target_pos.x, target_pos.y)
 		# destroy self
 		queue_free()
