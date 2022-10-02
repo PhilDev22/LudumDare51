@@ -10,9 +10,9 @@ extends Tween
 func _ready():
 	#print("this function is running")
 	self.interpolate_property(get_parent(), "modulate", 
-	  Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.5, 
+	  Color(1, 1, 1, 1), Color(1, 1, 1, 1), 0.1, 
 	  Tween.TRANS_LINEAR, Tween.EASE_IN)
-	self.start()
+	#self.start()
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
