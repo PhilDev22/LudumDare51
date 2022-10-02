@@ -26,7 +26,7 @@ var collision_objects = []
 var rng 
 
 var ai_update_timer = 0
-var ai_update_timer_max = 0.1
+var ai_update_timer_max = 0.05
 
 func get_class():
 	return "Player"
@@ -38,6 +38,7 @@ func _ready():
 	build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
+	self.connect("action_build", get_parent().get_parent(), "_on_build")
 	
 	
 func _physics_process(delta):
@@ -150,6 +151,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		return
 		
 	var destroy = destroy_path.instance()
+	destroy.connect("collision_with_wall", get_parent().get_parent(), "_on_destroy")
 	get_parent().get_parent().add_child(destroy)
 	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
@@ -182,13 +184,20 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	
 func update_ai_direction():
 	
-	var rand_x = randi() % 3 -1
-	var rand_y = randi() % 3 -1
+	var rand_x = randi() % 3 - 1
+	#if rand_x == 0:
+		#rand_x = -1
+	var rand_y = randi() % 3 - 1
+	#if rand_y == 0:
+		#rand_y = -1
 		
-	direction_ai = Vector2(
-		rand_x, 
-		rand_y)
-		
+	if direction_last.x != 0:
+		direction_ai.x = 0
+		direction_ai.y = rand_y
+	elif direction_last.y != 0:
+		direction_ai.x = rand_x
+		direction_ai.y = 0
+	
 	print("Update AI direction: ", direction_ai)
 	
 	
