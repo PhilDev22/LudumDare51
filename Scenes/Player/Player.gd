@@ -15,9 +15,8 @@ onready var animated_sprite = $AnimatedSprite
 
 var velocity = Vector2()
 var direction
-var direction_destroy = Vector2(0, 1)
-var direction_build = Vector2(0, 1)
-var direction_last = Vector2(0,0)
+var direction_action = Vector2(0, 1)
+var direction_last = Vector2(0,1)
 var collision_objects = []
 
 func get_class():
@@ -83,22 +82,30 @@ func _process(delta):
 	if player_nr == 0:
 		if InputSystem.input_destroy:
 			if InputSystem.input_direction != Vector2(0, 0):
-				direction_destroy = InputSystem.input_direction
-			destroy(player_nr, direction_destroy)
+				direction_action = InputSystem.input_direction
+			else:
+				direction_action = direction_last
+			destroy(player_nr, direction_action)
 		if InputSystem.input_build:
 			if InputSystem.input_direction != Vector2(0, 0):
-				direction_build = InputSystem.input_direction
-			build(player_nr, direction_build)
+				direction_action = InputSystem.input_direction
+			else:
+				direction_action = direction_last
+			build(player_nr, direction_action)
 			
 	if player_nr == 1:
 		if InputSystem.input_destroy_p2:
 			if InputSystem.input_direction_p2 != Vector2(0, 0):
-				direction_destroy = InputSystem.input_direction_p2
-			destroy(player_nr, direction_destroy)
+				direction_action = InputSystem.input_direction_p2
+			else:
+				direction_action = direction_last
+			destroy(player_nr, direction_action)
 		if InputSystem.input_build_p2:
 			if InputSystem.input_direction != Vector2(0, 0):
-				direction_build = InputSystem.input_direction
-			build(player_nr, direction_build)
+				direction_action = InputSystem.input_direction_p2
+			else:
+				direction_action = direction_last
+			build(player_nr, direction_action)
 
 func handle_collisions():
 	for i in collision_objects.size():
@@ -111,19 +118,14 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 	var destroy = destroy_path.instance()
 	get_parent().add_child(destroy)
 	destroy.position = $Node2D/Position2D.global_position
-	if player_nr == 0:
-		destroy.velocity = direction_destroy
-	elif player_nr == 1:
-		destroy.velocity = direction_destroy
-	print(destroy.velocity)
+	destroy.velocity = direction_destroy
 	emit_signal("action_destroy", player_nr)
 	
 	
-func build(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
-	
-	# TODO
-	
+func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
+	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
+	var pos = $Node2D/Position2D.global_position
+	interactive_terrain.add_wall_behind_player(pos.x, pos.y, direction_player)
 	print("Player ", player_nr, " is building")
-	
 	emit_signal("action_build", player_nr)
 	
