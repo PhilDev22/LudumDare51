@@ -83,7 +83,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	
-	set_z_index(position.y)
+	# set_z_index(position.y)
 	
 	if player_nr == 0:
 		if InputSystem.input_destroy:
