@@ -10,20 +10,20 @@ var num_cells_y = int(tiles_vertical / 2)
 var tiles = [
 	-1,
 	1,
-	5,
 	3,
+	4,
 	0,
 	10,
-	-1,
+	12,
 	9,
 	2,
-	-1,
+	13,
 	11,
 	7,
-	4,
+	5,
 	8,
 	6,
-	-1
+	14
 ]
 
 var cells = []
@@ -47,6 +47,7 @@ func _ready():
 	update_tileset_grid()
 	update_tiles()
 	
+# warning-ignore:return_value_discarded
 	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
 
 
