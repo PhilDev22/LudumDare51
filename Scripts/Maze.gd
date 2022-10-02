@@ -65,7 +65,12 @@ func _on_destroy(position, velocity):
 	
 	
 func _on_build(player_nr, position, direction_player):
-	print("build connected")
+	print(position)
+	var grid_vec = global_position_to_wall_grid(position) - direction_player.normalized()
+	print(grid_vec)
+	add_wall_to_grid_if_allowed(grid_vec)
+	update_tileset_grid()
+	update_tiles()
 	
 
 func reset_cells():
@@ -168,23 +173,29 @@ func swiss_cheese():
 				
 
 func change_maze():
-	var players = $"TileMapWalls".get_children()
-	if len(players) != 2:
-		print(len(players))
-		print("change maze called without players being present")
-		return
-	
 	reset_cells()
 	iterative_dfs()
 	swiss_cheese()
 	update_wall_grid()
 	
 	# calc player position and remove respective tiles
+	for grid_vec in get_player_wall_grid_indices():
+		remove_wall_from_grid_if_allowed(grid_vec)
+			
+	update_tileset_grid()
+	update_tiles()
+	
+	
+func get_player_wall_grid_indices(smaller_extent=1):
+	var indices = []
+	
+	var players = $"TileMapWalls".get_children()
+	# calc player position
 	for player in players:
 		var coll = player.get_node("CollisionShape2D")
 		var pos = coll.position + player.get_global_position()
 		# substract one from extends to account for "near" collisions
-		var ext = coll.get_shape().extents - Vector2.ONE
+		var ext = coll.get_shape().extents - Vector2.ONE * smaller_extent
 		var corners = [
 			pos - ext,
 			pos + ext,
@@ -193,11 +204,10 @@ func change_maze():
 		]
 		for corner in corners:
 			var grid_vec = global_position_to_wall_grid(corner)
-			remove_wall_from_grid_if_allowed(grid_vec)
+			indices.push_back(grid_vec)
 			
-	update_tileset_grid()
-	update_tiles()
-	
+	return indices
+
 	
 func remove_wall_from_grid_if_allowed(index_vec: Vector2):
 	# check if fixed sidewall or no wall. return true if a wall was deleted
@@ -207,9 +217,23 @@ func remove_wall_from_grid_if_allowed(index_vec: Vector2):
 			or y <= 1 or y >= len(wall_grid[0]) - 2 \
 			or not wall_grid[x][y]:
 		return false
-	else:
-		wall_grid[x][y] = false
-		return true
+
+	wall_grid[x][y] = false
+	return true
+		
+
+func add_wall_to_grid_if_allowed(index_vec: Vector2):
+	# check if wall present or player on wall. return true if a wall was placed
+	var x = int(index_vec.x)
+	var y = int(index_vec.y)
+	if wall_grid[x][y]:
+		return false
+	# don't use atm, too restrictive
+#	if index_vec in get_player_wall_grid_indices(15):
+#		return false
+		
+	wall_grid[x][y] = true
+	return true
 
 
 func global_position_to_wall_grid(pos: Vector2):
