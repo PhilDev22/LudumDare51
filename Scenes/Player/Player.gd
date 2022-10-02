@@ -24,7 +24,6 @@ var direction_last = Vector2(0,1)
 var collision_objects = []
 
 #ai
-var rng 
 var direction_ai = Vector2(1, 0)
 var other_player
 var ai_stuck_timer = 0
@@ -32,7 +31,7 @@ var ai_stuck_timer_max = 0.05
 var ai_stuck_vector = Vector2()
 var ai_stuck_threshold = 3
 var ai_player_influence_distance = 250
-var ai_ability_timer = 0
+var ai_ability_timer = -5
 var ai_ability_timer_max = 2
 
 func get_class():
@@ -43,8 +42,6 @@ func _ready():
 	animated_sprite.set_playing(true)
 	build_wall.get_node("AnimatedSprite").hide()
 	build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
 	self.connect("action_build", get_parent().get_parent(), "_on_build")
 	
 	if (player_nr == 1):
@@ -179,7 +176,6 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		direction_destroy.y = 0
 	
 	if not timer_shoot.is_stopped():
-		print("Player ", player_nr, ": shooting cooldown still active")
 		return
 		
 	var destroy = destroy_path.instance()
@@ -196,7 +192,6 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	
 	if not timer_build.is_stopped():
-		print("Player ", player_nr, ": building cooldown still active")
 		return
 		
 	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
@@ -240,7 +235,7 @@ func update_ai_direction(collision_obj = null):
 				rand_y	= 1
 			elif position.y < other_player.position.y:
 				rand_y	= -1
-			
+		
 			
 	if direction_last.x != 0:
 		direction_ai.x = 0
