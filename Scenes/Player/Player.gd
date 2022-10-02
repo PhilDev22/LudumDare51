@@ -126,7 +126,7 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 	
 func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	var interactive_terrain = get_tree().get_nodes_in_group ("Walls")[0]
-	interactive_terrain.add_wall_behind_player(position.x, position.y, direction_player)
+	#interactive_terrain.add_wall_behind_player(position.x, position.y, direction_player)
 	print("Player ", player_nr, " is building")
 	emit_signal("action_build", player_nr)
 	
