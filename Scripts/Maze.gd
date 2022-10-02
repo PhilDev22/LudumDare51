@@ -52,7 +52,6 @@ func _ready():
 	swiss_cheese()
 	update_wall_grid()
 	update_tileset_grid()
-	print_maze()
 	update_tiles()
 	#print_maze()
 
