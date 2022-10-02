@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-onready var animation_player = $IngameUI/AnimationPlayer
 onready var ability_shoot_p0 = $IngameUI/AbilityShootPlayer1
 onready var ability_build_p0 = $IngameUI/AbilityBuildPlayer1
 onready var ability_shoot_p1 = $IngameUI/AbilityShootPlayer2
@@ -21,16 +20,6 @@ func connect_signals():
 		players[i].get_node("TimerShoot").connect("timeout", self, "on_timer_shoot_timeout_p"+ str(i))
 		players[i].get_node("TimerBuild").connect("timeout", self, "on_timer_build_timeout_p"+ str(i))
 		
-func fade_transition_scene(scene):
-	$FadePanel.visible = true
-	animation_player.play("FadeOut")
-	InputSystem.disable_input_until(animation_player, "animation_finished")
-	yield(animation_player, "animation_finished")
-	get_tree().change_scene(scene)
-	animation_player.play("FadeIn")
-	InputSystem.disable_input_until(animation_player, "animation_finished")
-	yield(animation_player, "animation_finished")
-	$FadePanel.visible = false
 
 func on_ability_shoot_used(player_nr):
 	if player_nr == 0:
