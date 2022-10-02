@@ -21,12 +21,17 @@ var velocity = Vector2()
 var direction
 var direction_action = Vector2(0, 1)
 var direction_last = Vector2(0,1)
-var direction_ai = Vector2(1, 1)
 var collision_objects = []
-var rng 
 
-var ai_update_timer = 0
-var ai_update_timer_max = 0.05
+#ai
+var rng 
+var direction_ai = Vector2(1, 0)
+var other_player
+var ai_stuck_timer = 0
+var ai_stuck_timer_max = 0.02
+var ai_stuck_vector = Vector2()
+var ai_stuck_threshold = 2
+var ai_player_influence_distance = 150
 
 func get_class():
 	return "Player"
@@ -39,6 +44,9 @@ func _ready():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	self.connect("action_build", get_parent().get_parent(), "_on_build")
+	
+	if (player_nr == 1):
+		is_ai = true
 	
 	
 func _physics_process(delta):
@@ -129,11 +137,23 @@ func _process(delta):
 				direction_action = direction_last
 			build(player_nr, direction_action)
 			
-	if is_ai and not velocity:
-		ai_update_timer += delta
-		if ai_update_timer >= ai_update_timer_max:
-			ai_update_timer = 0
+	if is_ai: 
+		if not velocity:
 			update_ai_direction()
+		ai_stuck_timer += delta
+		if (ai_stuck_timer >= ai_stuck_timer_max):
+			ai_stuck_timer = 0
+			if (ai_stuck_vector.x > ai_stuck_threshold 
+				or ai_stuck_vector.x < -ai_stuck_threshold
+				or ai_stuck_vector.y > ai_stuck_threshold
+				or ai_stuck_vector.y < -ai_stuck_threshold):
+					
+				print(ai_stuck_vector)
+				direction_ai = -ai_stuck_vector.normalized()
+				
+			ai_stuck_vector = Vector2()
+		
+		
 
 func handle_collisions():
 	for i in collision_objects.size():
@@ -141,7 +161,7 @@ func handle_collisions():
 		if collision_obj.get_class() == "Player":
 			emit_signal("collision_with_player")
 		elif is_ai and collision_obj.is_in_group("Walls"):
-			update_ai_direction()
+			update_ai_direction(collision_obj)
 
 
 func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
@@ -182,15 +202,33 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	build_wall.get_node("AnimatedSprite/Tween").start()
 	
 	
-func update_ai_direction():
+func update_ai_direction(collision_obj = null):
 	
+	# prevent direction change if the collided wall was not in direction of player
+	if collision_obj:
+		var cell_id = collision_obj.get_cellv(position + (direction_last * GameData.tile_size))
+		if (cell_id == -1):
+			return
+	
+	# get random value (-1,0,1)
 	var rand_x = randi() % 3 - 1
-	#if rand_x == 0:
-		#rand_x = -1
 	var rand_y = randi() % 3 - 1
-	#if rand_y == 0:
-		#rand_y = -1
-		
+	
+	# influence next movement direction dependent on other players position
+	var distance_to_player = position.distance_to(other_player.position) 
+	if distance_to_player < ai_player_influence_distance:
+		if direction_last.y != 0:
+			if position.x > other_player.position.x:
+				rand_x	= 1
+			elif position.x < other_player.position.x:
+				rand_x	= -1
+		elif direction_last.x != 0:
+			if position.y > other_player.position.y:
+				rand_y	= 1
+			elif position.y < other_player.position.y:
+				rand_y	= -1
+			
+			
 	if direction_last.x != 0:
 		direction_ai.x = 0
 		direction_ai.y = rand_y
@@ -198,9 +236,9 @@ func update_ai_direction():
 		direction_ai.x = rand_x
 		direction_ai.y = 0
 	
-	print("Update AI direction: ", direction_ai)
-	
-	
+	ai_stuck_vector += direction_ai
+
+
 func _on_TimerShoot_timeout():
 	pass # Replace with function body.
 	

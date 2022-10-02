@@ -27,7 +27,7 @@ func on_ability_shoot_used(player_nr):
 	elif player_nr == 1:
 		ability_shoot_p1.get_node("CooldownRect").visible = true
 	
-func on_ability_build_used(player_nr):
+func on_ability_build_used(player_nr, position, velocity):
 	if player_nr == 0:
 		ability_build_p0.get_node("CooldownRect").visible = true
 	elif player_nr == 1:
