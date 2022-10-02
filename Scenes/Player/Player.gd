@@ -169,9 +169,9 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		
 	var destroy = destroy_path.instance()
 	destroy.connect("collision_with_wall", get_parent().get_parent(), "_on_destroy")
-	get_parent().get_parent().add_child(destroy)
 	destroy.position = $WeaponPosition2D.global_position
 	destroy.velocity = direction_destroy
+	get_parent().add_child(destroy)
 	print("Player ", player_nr, ": shooting")
 	emit_signal("action_destroy", player_nr)
 	timer_shoot.start()
