@@ -60,7 +60,7 @@ speed = 300
 position = Vector2( 0, -17 )
 frames = SubResource( 15 )
 animation = "walk_horizontal"
-frame = 2
+frame = 3
 playing = true
 
 [node name="TimerShoot" type="Timer" parent="."]
