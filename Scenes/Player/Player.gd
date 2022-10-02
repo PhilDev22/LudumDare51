@@ -50,12 +50,14 @@ func _physics_process(delta):
 			velocity.x -= 1
 			
 		if direction.y == 1:
-			animated_sprite.set_animation("walk_down")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_down")
+				animated_sprite.flip_h = false
 			velocity.y += 1
 		elif direction.y == -1:
-			animated_sprite.set_animation("walk_up")
-			animated_sprite.flip_h = false
+			if direction.x == 0:
+				animated_sprite.set_animation("walk_up")
+				animated_sprite.flip_h = false
 			velocity.y -= 1
 
 	if not velocity:

@@ -28,7 +28,7 @@ func get_input_direction(var player = 0):
 	var prefix = second_player_input_prefix if player == 1 else ""
 	var horizontal = int(Input.is_action_pressed(prefix + "ui_right")) - int(Input.is_action_pressed(prefix + "ui_left"))
 	var vertical = int(Input.is_action_pressed(prefix +"ui_down")) - int(Input.is_action_pressed(prefix + "ui_up"))
-	return Vector2(horizontal, vertical if horizontal == 0 else 0)
+	return Vector2(horizontal, vertical)
 
 
 func get_input_build(var player = 0):
