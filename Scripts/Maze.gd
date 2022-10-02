@@ -49,7 +49,17 @@ func _ready():
 	
 # warning-ignore:return_value_discarded
 	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
+	
+	# connect destroy and build signals
+	
 
+func _on_destroy():
+	print("destroy connected")
+	
+	
+func _on_build():
+	print("build connected")
+	
 
 func reset_cells():
 	# initialize cells with status (visited, wall_down, wall_right)
