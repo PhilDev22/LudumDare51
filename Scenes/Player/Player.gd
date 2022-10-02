@@ -182,6 +182,9 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 	
 	
 func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
+	# no diagonal building
+	if direction_player.x != 0 and direction_player.y != 0:
+		direction_player.y = 0
 	
 	if not timer_build.is_stopped():
 		print("Player ", player_nr, ": building cooldown still active")
