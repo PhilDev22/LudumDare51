@@ -162,6 +162,9 @@ func handle_collisions():
 
 
 func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
+	# no diagonal shooting
+	if direction_destroy.x != 0 and direction_destroy.y != 0:
+		direction_destroy.y = 0
 	
 	if not timer_shoot.is_stopped():
 		print("Player ", player_nr, ": shooting cooldown still active")
@@ -169,7 +172,8 @@ func destroy(var player_nr = 0, var direction_destroy = Vector2(0, 1)):
 		
 	var destroy = destroy_path.instance()
 	destroy.connect("collision_with_wall", get_parent().get_parent(), "_on_destroy")
-	destroy.position = $WeaponPosition2D.global_position
+	#destroy.position = $WeaponPosition2D.global_position - get_parent().position
+	destroy.position = global_position - get_parent().position
 	destroy.velocity = direction_destroy
 	get_parent().add_child(destroy)
 	print("Player ", player_nr, ": shooting")
