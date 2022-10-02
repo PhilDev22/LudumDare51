@@ -31,7 +31,9 @@ var ai_stuck_timer = 0
 var ai_stuck_timer_max = 0.05
 var ai_stuck_vector = Vector2()
 var ai_stuck_threshold = 3
-var ai_player_influence_distance = 300
+var ai_player_influence_distance = 250
+var ai_ability_timer = 0
+var ai_ability_timer_max = 2
 
 func get_class():
 	return "Player"
@@ -149,8 +151,18 @@ func _process(delta):
 				or ai_stuck_vector.y < -ai_stuck_threshold):
 					
 				direction_ai = -ai_stuck_vector.normalized()
+				destroy(player_nr, direction_ai)
 				
 			ai_stuck_vector = Vector2()
+		
+		ai_ability_timer += delta
+		if ai_ability_timer >= ai_ability_timer_max:
+			ai_ability_timer = 0
+			var r = randi() % 2
+			if r == 0:
+				destroy(player_nr, direction_ai)
+			elif r == 1:
+				build(player_nr, direction_ai)
 
 func handle_collisions():
 	for i in collision_objects.size():
@@ -241,8 +253,7 @@ func update_ai_direction(collision_obj = null):
 
 
 func _on_TimerShoot_timeout():
-	pass # Replace with function body.
-	
+	pass
 
 func _on_TimerBuild_timeout():
 	pass # Replace with function body.
