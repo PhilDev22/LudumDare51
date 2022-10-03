@@ -26,7 +26,8 @@ func _process(delta):
 	input_destroy_p2 = get_input_destroy(1)
 
 func get_input_proceed():
-	return Input.is_action_just_pressed("ui_accept")
+	return (Input.is_action_just_pressed("ui_accept") 
+			or Input.is_action_just_pressed("ui_select"))
 	
 func get_input_direction(var player = 0):
 	var prefix = second_player_input_prefix if player == 1 else ""

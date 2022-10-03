@@ -16,7 +16,7 @@ func _ready():
 	set_unvisible()
 
 func _process(delta):
-	if InputSystem.input_proceed:
+	if self.visible and InputSystem.input_proceed:
 		set_unvisible()
 		level_base.restart_game()
 

@@ -8,6 +8,8 @@ var player1
 
 const knubbel_path = preload("res://Scenes/Animations/Knubbel.tscn")
 var knubbel_exists = false
+var knubbel
+var spawn_points
 
 var play_time = 0
 var is_playing = false
@@ -19,7 +21,7 @@ func start_game():
 	# TODO handle game start, set inital values, etc.
 	print("Game starts")
 	
-	var spawn_points = $"SpawnPoints".get_children()
+	spawn_points = $"SpawnPoints".get_children()
 	
 	# Instantiate player
 	player0 = get_node("/root/LevelBase/Maze/TileMapWalls/Player")
@@ -45,6 +47,12 @@ func start_game():
 	
 	
 func restart_game():
+	knubbel.queue_free()
+	knubbel_exists = false
+	player0.visible = true
+	player1.visible = true
+	player0.position = spawn_points[0].position
+	player1.position = spawn_points[1].position
 	play_time = 0
 	is_playing = true
 	emit_signal("game_started")
@@ -61,24 +69,22 @@ func handle_game_over():
 	# emit game over signal
 	emit_signal("game_over", play_time)
 
-	# disable inputs	
-	
 	# stop timer
 	get_node("/root/UI/IngameUI/Timer").stop()
 	
 	# spawn game over animation
-	if not knubbel_exists:
-		var pos0 = player0.get_global_position()
-		var pos1 = player1.get_global_position()
-		var middle = pos0 + 0.5 * (pos1 - pos0)
-		var knubbel = knubbel_path.instance()
-		knubbel.position = middle
-		add_child(knubbel)
-		knubbel_exists = true
-		
-		# remove players
-		player0.queue_free()
-		player1.queue_free()
-		
+	var pos0 = player0.get_global_position()
+	var pos1 = player1.get_global_position()
+	var middle = pos0 + 0.5 * (pos1 - pos0)
+	knubbel = knubbel_path.instance()
+	knubbel.position = middle
+	add_child(knubbel)
+	knubbel_exists = true
+	
+	# remove players
+	player0.visible = false
+	player1.visible = false
+
+
 func on_player_collision():
 	handle_game_over()
