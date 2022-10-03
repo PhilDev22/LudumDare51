@@ -38,7 +38,7 @@ func on_game_over(play_time):
 func animate_game_over_label():
 	LabelGameOver.visible = true
 	tweenLabelGameOver.interpolate_property(LabelGameOver, "margin_top",
-			-500, 260, 0.4,
+			-500, 150, 0.4,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tweenLabelGameOver.start()
 
