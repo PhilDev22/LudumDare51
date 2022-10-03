@@ -24,7 +24,8 @@ func connect_signals():
 func _process(delta):
 	if self.visible and InputSystem.input_proceed:
 		set_unvisible()
-		level_base.restart_game()
+		# level_base.restart_game()
+		get_tree().change_scene("res://Scenes/Screens/SelectionUI.tscn")
 
 
 func set_unvisible():

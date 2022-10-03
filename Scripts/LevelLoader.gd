@@ -30,11 +30,11 @@ func start_game():
 	# Instantiate player
 	player0 = get_node("/root/LevelBase/Maze/TileMapWalls/Player")
 	player0.connect("collision_with_player", self, "on_player_collision")
-	player0.player_nr = 0
+	player0.player_nr = get_node("/root/GameData").asterius_player_nr
 	
 	player1 = get_node("/root/LevelBase/Maze/TileMapWalls/King")
 	player1.connect("collision_with_player", self, "on_player_collision")
-	player1.player_nr = 1
+	player1.player_nr = get_node("/root/GameData").theseus_player_nr
 	player1.is_ai = false
 	
 	player0.other_player = player1

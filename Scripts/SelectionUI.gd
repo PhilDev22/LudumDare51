@@ -23,6 +23,7 @@ const cloud_path = preload("res://Scenes/Objects/Clouds.tscn")
 var starting = false
 
 func _ready():
+	get_node("/root/UI").visible = false
 	init()
 	
 # call this when screen is shown
@@ -60,6 +61,8 @@ func check_start_game():
 		# player_selection: -1 = Asterius, 1 = Theseus
 		emit_signal("character_selection_done", player1_selection, player2_selection)
 		starting = true
+		get_node("/root/GameData").theseus_player_nr = 0 if player1_selection == 1 else 1
+		get_node("/root/GameData").asterius_player_nr = 0 if player1_selection == -1 else 1
 		start_game()
 
 func shift_player1(direction):
@@ -82,7 +85,14 @@ func shift_player1(direction):
 		label_player1ArrowLeft.text = "<"
 		label_player1ArrowRight.text = ">"
 		player1_selection = 0
-	
+		
+	if (player1_selection != 0 and player2_selection != 0
+			and player1_selection != player2_selection):
+		$LabelEnter.visible = true
+	else: 
+		$LabelEnter.visible = false
+		
+		
 func shift_player2(direction):
 	
 	if player2_selection == 0 and direction == -1 and player1_selection != -1:
@@ -103,6 +113,12 @@ func shift_player2(direction):
 		label_player2ArrowLeft.text = "<"
 		label_player2ArrowRight.text = ">"
 		player2_selection = 0
+		
+	if (player1_selection != 0 and player2_selection != 0
+			and player1_selection != player2_selection):
+		$LabelEnter.visible = true
+	else: 
+		$LabelEnter.visible = false
 	
 func start_game():
 	var clouds = cloud_path.instance()

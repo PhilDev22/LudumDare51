@@ -4,14 +4,14 @@
 [ext_resource path="res://Sprites/GameoverscreenImage.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/gameover_background.png" type="Texture" id=3]
 
-[sub_resource type="DynamicFontData" id=12]
+[sub_resource type="DynamicFontData" id=16]
 font_path = "res://fonts/PipeDream-1Zwg.ttf"
 
 [sub_resource type="DynamicFont" id=13]
 size = 80
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 12 )
+font_data = SubResource( 16 )
 
 [sub_resource type="DynamicFontData" id=14]
 font_path = "res://fonts/PipeDream-1Zwg.ttf"
@@ -56,18 +56,26 @@ align = 1
 
 [node name="LabelTime" type="Label" parent="."]
 margin_left = 582.0
-margin_top = 382.0
+margin_top = 338.0
 margin_right = 703.0
-margin_bottom = 499.0
+margin_bottom = 455.0
 custom_fonts/font = SubResource( 15 )
 text = "Time:
 "
 
+[node name="LabelEnter" type="Label" parent="."]
+margin_left = 582.0
+margin_top = 566.0
+margin_right = 716.0
+margin_bottom = 683.0
+custom_fonts/font = SubResource( 15 )
+text = "Enter"
+
 [node name="LabelTimePlayed" type="Label" parent="."]
 margin_left = 544.0
-margin_top = 448.0
+margin_top = 404.0
 margin_right = 753.0
-margin_bottom = 565.0
+margin_bottom = 521.0
 custom_fonts/font = SubResource( 15 )
 text = "0.0
 "

@@ -71,6 +71,7 @@ func get_clouds(pos_x, pos_y):
 			x += jitter_val
 			y += jitter_val
 			cloud.pos_out = Vector2(x, y)
+			cloud.position = Vector2(x, y)
 			y_sort.add_child(cloud)
 			cloud.move()
 	

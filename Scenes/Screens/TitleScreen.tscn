@@ -1,6 +1,5 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://fonts/PipeDream-1Zwg.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/titleScreen/buttons_pipe_35.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Sprites/King/8.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/titlepage_background.png" type="Texture" id=4]
@@ -27,9 +26,14 @@ animations = [ {
 "speed": 7.0
 } ]
 
-[sub_resource type="DynamicFont" id=3]
-size = 130
-font_data = ExtResource( 1 )
+[sub_resource type="DynamicFontData" id=12]
+font_path = "res://fonts/PipeDream-1Zwg.ttf"
+
+[sub_resource type="DynamicFont" id=13]
+size = 120
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 12 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -37,8 +41,6 @@ anchor_bottom = 1.0
 script = ExtResource( 5 )
 
 [node name="Background" type="TextureRect" parent="."]
-margin_left = 5.0
-margin_top = 2.0
 margin_right = 1285.0
 margin_bottom = 722.0
 texture = ExtResource( 4 )
@@ -78,7 +80,7 @@ position = Vector2( 969, 488 )
 scale = Vector2( 2.5, 2.5 )
 frames = SubResource( 1 )
 animation = "king"
-frame = 1
+frame = 2
 playing = true
 
 [node name="Minotaur" type="AnimatedSprite" parent="."]
@@ -86,16 +88,17 @@ position = Vector2( 782, 449 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 2 )
 animation = "minotaur"
+frame = 2
 playing = true
 
 [node name="Label" type="Label" parent="."]
-margin_left = 159.0
-margin_top = 65.0
-margin_right = 1121.0
-margin_bottom = 222.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 3 )
+margin_left = 194.0
+margin_top = 69.0
+margin_right = 1019.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 13 )
 text = "MinotaurRush"
+align = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]

@@ -15,7 +15,7 @@ script = ExtResource( 1 )
 position = Vector2( 93, 97 )
 
 [node name="SpawnPoint2" type="Node2D" parent="SpawnPoints"]
-position = Vector2( 1199, 638 )
+position = Vector2( 1231, 639 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
