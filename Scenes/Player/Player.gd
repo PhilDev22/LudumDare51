@@ -203,14 +203,9 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	emit_signal("action_build", player_nr, global_position, direction_player)
 	timer_build.start()
 	
-	#build_wall.show()
-	build_wall.get_node("AudioStreamPlayer").play()
-	build_wall.get_node("AnimatedSprite").show()
-	build_wall.get_node("AnimatedSprite").play("BuildWall")
-	build_wall.get_node("AnimatedSprite/Tween").interpolate_property(build_wall.get_node("AnimatedSprite"), "modulate", 
-	  Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.8, 
-	  Tween.TRANS_LINEAR, Tween.EASE_IN)
-	build_wall.get_node("AnimatedSprite/Tween").start()
+	var wall = preload("res://Scenes/Objects/BuildWall.tscn")
+	var wallInst = wall.instance()
+	add_child(wallInst)
 	
 	
 func update_ai_direction(collision_obj = null):
@@ -255,11 +250,3 @@ func _on_TimerShoot_timeout():
 
 func _on_TimerBuild_timeout():
 	pass # Replace with function body.
-
-
-func _reset_build_animation():
-	build_wall.get_node("AnimatedSprite").hide()
-	build_wall.get_node("AnimatedSprite").modulate = Color(1, 1, 1, 1)
-	build_wall.get_node("AnimatedSprite/Tween").reset_all()
-	build_wall.get_node("AudioStreamPlayer").stop()
-		
