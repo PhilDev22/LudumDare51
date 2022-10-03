@@ -16,12 +16,13 @@ colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
 position = Vector2( 91, -4 )
-amount = 20
-lifetime = 0.5
+amount = 5
+lifetime = 0.25
 local_coords = false
 draw_order = 1
 texture = ExtResource( 1 )
 direction = Vector2( 0, -1 )
+spread = 35.72
 gravity = Vector2( 0, 0 )
 initial_velocity = 8.0
 damping = 2.25
