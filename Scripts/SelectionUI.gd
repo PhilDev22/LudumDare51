@@ -16,8 +16,12 @@ var pos_right = 720
 var player1_selection = 0 # -1 = Asterius, 1 = Theseus, 0 = none
 var player2_selection = 0 # -1 = Asterius, 1 = Theseus, 0 = none
 
+const cloud_path = preload("res://Scenes/Objects/Clouds.tscn")
+
+var starting = false
+
 func _ready():
-	self.visible = false
+	init()
 	
 # call this when screen is shown
 func init():
@@ -33,7 +37,7 @@ func init():
 	
 func _process(delta):
 	
-	if not self.visible:
+	if starting:
 		return
 	
 	if Input.is_action_just_pressed("ui_left"):
@@ -51,9 +55,10 @@ func _process(delta):
 func check_start_game():
 	if (player1_selection != 0 and player2_selection != 0
 		and player1_selection != player2_selection):
-		self.visible = false
 		# player_selection: -1 = Asterius, 1 = Theseus
-		emit_signal("character_selection_done", player1_selection, player2_selection) 
+		emit_signal("character_selection_done", player1_selection, player2_selection)
+		starting = true
+		start_game()
 
 func shift_player1(direction):
 		
@@ -93,3 +98,10 @@ func shift_player2(direction):
 		label_player2ArrowRight.text = ">"
 		player2_selection = 0
 	
+func start_game():
+	var clouds = cloud_path.instance()
+	clouds.connect("closed", self, "_on_clouds_closed")
+	get_tree().root.add_child(clouds)
+
+func _on_clouds_closed():
+	get_tree().change_scene("res://Scenes/Main.tscn")		
