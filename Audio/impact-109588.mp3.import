@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/impact-109588.mp3-525edad4cf970a221b10e834e91e57fe.mp3str"
+
+[deps]
+
+source_file="res://Audio/impact-109588.mp3"
+dest_files=[ "res://.import/impact-109588.mp3-525edad4cf970a221b10e834e91e57fe.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
