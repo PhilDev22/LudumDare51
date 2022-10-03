@@ -8,6 +8,8 @@ onready var label_player1ArrowLeft = $LabelPlayer1ArrowLeft
 onready var label_player2ArrowLeft = $LabelPlayer2ArrowLeft
 onready var label_player1ArrowRight = $LabelPlayer1ArrowRight
 onready var label_player2ArrowRight = $LabelPlayer2ArrowRight
+onready var audio_horse = $AudioHorse
+onready var audio_scream = $AudioScream
 
 var pos_center = 567
 var pos_left = 410
@@ -18,6 +20,7 @@ var player2_selection = 0 # -1 = Asterius, 1 = Theseus, 0 = none
 
 func _ready():
 	self.visible = false
+	init()
 	
 # call this when screen is shown
 func init():
@@ -62,11 +65,13 @@ func shift_player1(direction):
 		label_player1ArrowLeft.text = ">"
 		label_player1ArrowRight.text = ""
 		player1_selection = -1
+		audio_horse.play()
 	elif player1_selection == 0 and direction == 1 and player2_selection != 1:
 		label_player1.rect_position.x = pos_right
 		label_player1ArrowLeft.text = ""
 		label_player1ArrowRight.text = "<"
 		player1_selection = 1
+		audio_scream.play()
 	elif ((player1_selection == -1 and direction == 1)
 		or (player1_selection == 1 and direction == -1)):
 		label_player1.rect_position.x = pos_center
@@ -75,17 +80,19 @@ func shift_player1(direction):
 		player1_selection = 0
 	
 func shift_player2(direction):
-		
+	
 	if player2_selection == 0 and direction == -1 and player1_selection != -1:
 		label_player2.rect_position.x = pos_left
 		label_player2ArrowLeft.text = ">"
 		label_player2ArrowRight.text = ""
 		player2_selection = -1
+		audio_horse.play()
 	elif player2_selection == 0 and direction == 1 and player1_selection != 1:
 		label_player2.rect_position.x = pos_right
 		label_player2ArrowLeft.text = ""
 		label_player2ArrowRight.text = "<"
 		player2_selection = 1
+		audio_scream.play()
 	elif ((player2_selection == -1 and direction == 1)
 		or (player2_selection == 1 and direction == -1)):
 		label_player2.rect_position.x = pos_center
