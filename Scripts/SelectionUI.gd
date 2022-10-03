@@ -58,6 +58,8 @@ func _process(delta):
 func check_start_game():
 	if (player1_selection != 0 and player2_selection != 0
 		and player1_selection != player2_selection):
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		# player_selection: -1 = Asterius, 1 = Theseus
 		emit_signal("character_selection_done", player1_selection, player2_selection)
 		starting = true
@@ -68,12 +70,16 @@ func check_start_game():
 func shift_player1(direction):
 		
 	if player1_selection == 0 and direction == -1 and player2_selection != -1:
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player1.rect_position.x = pos_left
 		label_player1ArrowLeft.text = ">"
 		label_player1ArrowRight.text = ""
 		player1_selection = -1
 		audio_horse.play()
 	elif player1_selection == 0 and direction == 1 and player2_selection != 1:
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player1.rect_position.x = pos_right
 		label_player1ArrowLeft.text = ""
 		label_player1ArrowRight.text = "<"
@@ -81,6 +87,8 @@ func shift_player1(direction):
 		audio_scream.play()
 	elif ((player1_selection == -1 and direction == 1)
 		or (player1_selection == 1 and direction == -1)):
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player1.rect_position.x = pos_center
 		label_player1ArrowLeft.text = "<"
 		label_player1ArrowRight.text = ">"
@@ -96,12 +104,16 @@ func shift_player1(direction):
 func shift_player2(direction):
 	
 	if player2_selection == 0 and direction == -1 and player1_selection != -1:
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player2.rect_position.x = pos_left
 		label_player2ArrowLeft.text = ">"
 		label_player2ArrowRight.text = ""
 		player2_selection = -1
 		audio_horse.play()
 	elif player2_selection == 0 and direction == 1 and player1_selection != 1:
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player2.rect_position.x = pos_right
 		label_player2ArrowLeft.text = ""
 		label_player2ArrowRight.text = "<"
@@ -109,6 +121,8 @@ func shift_player2(direction):
 		audio_scream.play()
 	elif ((player2_selection == -1 and direction == 1)
 		or (player2_selection == 1 and direction == -1)):
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
 		label_player2.rect_position.x = pos_center
 		label_player2ArrowLeft.text = "<"
 		label_player2ArrowRight.text = ">"

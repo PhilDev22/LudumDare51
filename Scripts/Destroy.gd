@@ -8,6 +8,8 @@ var velocity = Vector2(0, 1)  # (1,0)-right, (0,1)-down, (0,-1)-up, ...
 var max_distance = GameData.tile_size * 100
 var current_distance =  Vector2(0, 0)
 
+onready var audio_destroy = $AudioDestroy  # sound while destroy is traveling
+
 
 func _ready():
 	var collision_horizontal = $CollisionShape2D_horizontal 
@@ -16,10 +18,12 @@ func _ready():
 	collision_vertical.disabled = true
 	if velocity.x == 0 and velocity.y !=0: 
 		$AnimatedSprite.play("spikes_vertical")
+		audio_destroy.play()
 		collision_horizontal.disabled = true
 		collision_vertical.disabled = false
 	if velocity.x != 0 and velocity.y ==0:
 		$AnimatedSprite.play("spikes_horizontal")
+		audio_destroy.play()
 		collision_vertical.disabled = true
 		collision_horizontal.disabled = false
 		if velocity.x > 0:

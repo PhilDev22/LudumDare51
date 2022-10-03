@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/SelectionUI.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/King/1.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Audio/horse.wav" type="AudioStream" id=5]
 [ext_resource path="res://Sprites/charselection_background.png" type="Texture" id=6]
 [ext_resource path="res://fonts/titleScreen/text_pipe_philip.tres" type="DynamicFontData" id=7]
+[ext_resource path="res://Audio/button.mp3" type="AudioStream" id=8]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/PipeDream-1Zwg.ttf"
@@ -149,11 +150,16 @@ text = "Enter
 align = 1
 
 [node name="AudioHorse" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 211, 398 )
 stream = ExtResource( 5 )
 
 [node name="AudioScream" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 901, 400 )
 stream = ExtResource( 4 )
 volume_db = -14.371
+
+[node name="AudioButton" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 
 [connection signal="finished" from="AudioHorse" to="." method="_on_AudioHorse_finished"]
 [connection signal="finished" from="AudioScream" to="." method="_on_AudioScream_finished"]

@@ -81,6 +81,10 @@ func handle_game_over():
 	add_child(knubbel)
 	knubbel_exists = true
 	
+	knubbel.get_node("AudioCatch").stream.loop = false
+	knubbel.get_node("AudioCatch").play()
+	
+	
 	# spawn clouds
 	var clouds = clouds_path.instance()
 	clouds.disable_ui = false

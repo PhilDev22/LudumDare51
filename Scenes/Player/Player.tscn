@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/1.png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Sprites/Player/3.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Player/2.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Animations/DustParticles.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Audio/steps_mino.wav" type="AudioStream" id=12]
+[ext_resource path="res://Audio/steps_king.wav" type="AudioStream" id=13]
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
@@ -84,6 +86,12 @@ disabled = true
 
 [node name="DustParticles" parent="." instance=ExtResource( 11 )]
 position = Vector2( 0, 24 )
+
+[node name="AudioMino" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="AudioKing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
 
 [connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
 [connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]

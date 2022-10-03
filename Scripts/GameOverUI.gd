@@ -23,9 +23,14 @@ func connect_signals():
 
 func _process(delta):
 	if self.visible and InputSystem.input_proceed:
-		set_unvisible()
-		# level_base.restart_game()
-		get_tree().change_scene("res://Scenes/Screens/SelectionUI.tscn")
+		$AudioButton.stream.loop = false
+		$AudioButton.play()
+
+
+func _on_AudioButton_finished():
+	set_unvisible()
+	# level_base.restart_game()
+	get_tree().change_scene("res://Scenes/Screens/SelectionUI.tscn")
 
 
 func set_unvisible():
@@ -71,3 +76,6 @@ func _on_clouds_closed():
 	animate_game_over_label()
 	animate_time_label()
 	animate_time_played_label(time_played)
+
+
+
