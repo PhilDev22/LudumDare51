@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/King/8.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Sprites/King/2.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/King/3.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Objects/BuildWall.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Animations/DustParticles.tscn" type="PackedScene" id=12]
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
@@ -83,6 +84,9 @@ disabled = true
 position = Vector2( 0, 12 )
 rotation = 1.5708
 shape = SubResource( 16 )
+
+[node name="DustParticles" parent="." instance=ExtResource( 12 )]
+position = Vector2( 0, 24 )
 
 [connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
 [connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]
