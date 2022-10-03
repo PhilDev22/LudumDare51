@@ -8,6 +8,8 @@ var animation_dur_out = 1.5  # duration of animation in sec
 var cloud_size = rand_range(0.4, 0.5)
 var offset = 200  # offset in px of clouds spanning outside screen
 
+signal closed
+signal finished
 
 func _ready():
 	# Select cloud sprite randomly
@@ -37,17 +39,22 @@ func move() -> void:
 	tween.start()
 
 
+#func _on_Tween_tween_completed(object, key):
+#	emit_signal("closed")
+#	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur_out, Tween.TRANS_LINEAR)  # tween_property
+#	$Tween2.start()
+
 func _on_Tween_tween_completed(object, key):
-	get_tree().change_scene("res://Scenes/Main.tscn")
+	emit_signal("closed")
+	$Timer.start()
+
+
+func _on_Timer_timeout():
+	$Timer.stop()
 	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur_out, Tween.TRANS_LINEAR)  # tween_property
 	$Tween2.start()
 
-#func _on_Tween_tween_completed(object, key):
-#	$Timer.start()
-#
-#
-#func _on_Timer_timeout():
-#	$Timer.stop()
-#	get_tree().change_scene("res://Scenes/Main.tscn")
-#	$Tween2.interpolate_property(self, "global_position", pos_in, pos_out, animation_dur, Tween.TRANS_LINEAR)  # tween_property
-#	$Tween2.start()
+
+func _on_Tween2_tween_completed(object, key):
+	emit_signal("finished")
+	queue_free()

@@ -20,6 +20,8 @@ func connect_signals():
 		players[i].get_node("TimerShoot").connect("timeout", self, "on_timer_shoot_timeout_p"+ str(i))
 		players[i].get_node("TimerBuild").connect("timeout", self, "on_timer_build_timeout_p"+ str(i))
 		
+	$GameOverUI.connect_signals()
+		
 
 func on_ability_shoot_used(player_nr):
 	if player_nr == 0:

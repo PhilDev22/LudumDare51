@@ -11,9 +11,13 @@ onready var LabelTimePlayed = $LabelTimePlayed
 var level_base
 
 func _ready():
+	set_unvisible()
+	
+
+func connect_signals():
 	level_base = get_node("/root/LevelBase")
 	level_base.connect("game_over", self, "on_game_over")
-	set_unvisible()
+
 
 func _process(delta):
 	if self.visible and InputSystem.input_proceed:
@@ -33,7 +37,8 @@ func on_game_over(play_time):
 	animate_game_over_label()
 	animate_time_label()
 	animate_time_played_label(play_time)
-	
+	# level_base.knubbel.queue_free()
+
 	
 func animate_game_over_label():
 	LabelGameOver.visible = true
