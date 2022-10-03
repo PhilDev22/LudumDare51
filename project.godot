@@ -20,9 +20,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="2DGridMovement"
+config/name="Maze Rush"
 run/main_scene="res://Scenes/Main.tscn"
-config/icon="res://Sprites/icon.png"
+config/icon="res://Sprites/King/8.png"
 
 [autoload]
 
@@ -34,6 +34,7 @@ UI="*res://Scenes/UI.tscn"
 
 window/size/width=1280
 window/size/height=720
+window/size/resizable=false
 
 [global]
 
