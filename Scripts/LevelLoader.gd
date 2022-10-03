@@ -40,7 +40,10 @@ func handle_game_over():
 
 	# disable inputs	
 	get_node("/root/InputSystem").disable_input()
-		
+	
+	# stop timer
+	get_node("/root/UI/IngameUI/Timer").stop()
+	
 	# spawn game over animation
 	if not knubbel_exists:
 		var pos0 = player0.get_global_position()
