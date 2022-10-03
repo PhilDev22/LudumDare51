@@ -63,6 +63,8 @@ func _physics_process(delta):
 	if direction:
 		direction_last = direction
 
+		$DustParticles.direction = Vector2(0, -1) if direction.x != 0 else Vector2.ZERO
+
 		if direction.x == 1:
 			animated_sprite.set_animation("walk_horizontal")
 			animated_sprite.flip_h = false
@@ -84,6 +86,7 @@ func _physics_process(delta):
 			velocity.y -= 1
 
 	if not velocity:
+		$DustParticles.emitting = false
 		if direction_last.x == 1:
 			animated_sprite.set_animation("idle_horizontal")
 			animated_sprite.flip_h = false
@@ -97,6 +100,7 @@ func _physics_process(delta):
 			animated_sprite.set_animation("idle_up")
 			animated_sprite.flip_h = false
 	else:
+		$DustParticles.emitting = true
 		velocity = velocity.normalized() * speed
 		velocity = move_and_slide(velocity)
 		collision_objects.clear()
