@@ -162,5 +162,5 @@ text = "Player 2"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -18.233
+volume_db = -28.363
 autoplay = true

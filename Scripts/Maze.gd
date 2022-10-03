@@ -237,6 +237,8 @@ func get_player_wall_grid_indices(smaller_extent=1):
 	var players = $"TileMapWalls".get_children()
 	# calc player position
 	for player in players:
+		if not player.is_in_group("players"):
+			continue
 		var coll = player.get_node("CollisionShape2D")
 		var pos = coll.position + player.get_global_position()
 		# substract one from extends to account for "near" collisions

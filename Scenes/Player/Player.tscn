@@ -53,7 +53,7 @@ height = 24.0
 [sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 24, 13 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Players"]]
 script = ExtResource( 1 )
 speed = 300
 
@@ -61,6 +61,7 @@ speed = 300
 position = Vector2( 0, -17 )
 frames = SubResource( 15 )
 animation = "walk_horizontal"
+frame = 3
 playing = true
 
 [node name="TimerShoot" type="Timer" parent="."]
