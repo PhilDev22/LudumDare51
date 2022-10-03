@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Screens/GameOverUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Timer.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/ui_build.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/ui_shoot.png" type="Texture" id=5]
@@ -49,7 +50,7 @@ wait_time = 10.0
 autostart = true
 script = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="IngameUI/Timer"]
+[node name="LabelCountDown" type="Label" parent="IngameUI"]
 margin_left = 609.0
 margin_top = -2.0
 margin_right = 690.0
@@ -161,3 +162,5 @@ margin_right = 1082.0
 margin_bottom = 44.0
 custom_fonts/font = SubResource( 11 )
 text = "Player 2"
+
+[node name="GameOverUI" parent="." instance=ExtResource( 2 )]
