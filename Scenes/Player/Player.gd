@@ -40,8 +40,8 @@ func get_class():
 func _ready():
 	animated_sprite.set_animation("idle_down") 
 	animated_sprite.set_playing(true)
-	build_wall.get_node("AnimatedSprite").hide()
-	build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
+	#build_wall.get_node("AnimatedSprite").hide()
+	#build_wall.get_node("AnimatedSprite/Tween").connect("tween_all_completed", self, "_reset_build_animation")
 	self.connect("action_build", get_parent().get_parent(), "_on_build")
 	
 	if (player_nr == 1):
