@@ -36,6 +36,9 @@ var ai_player_influence_distance = 250
 var ai_ability_timer = -5
 var ai_ability_timer_max = 2
 
+onready var audio_steps = $AudioSteps
+var audio_playing = false
+
 func get_class():
 	return "Player"
 	
@@ -49,6 +52,8 @@ func _ready():
 	
 	if (player_nr == 1):
 		is_ai = true
+		
+	audio_steps.stream.loop_mode = 1
 	
 	
 func _physics_process(delta):
@@ -67,6 +72,10 @@ func _physics_process(delta):
 		direction = direction_ai
 		
 	if direction:
+		if not audio_playing:
+			audio_steps.play()
+			audio_playing = true
+			
 		direction_last = direction
 
 		$DustParticles.direction = Vector2(0, -1) if direction.x != 0 else Vector2.ZERO
@@ -94,6 +103,9 @@ func _physics_process(delta):
 			velocity.y -= 1
 
 	if not velocity:
+		if audio_playing:
+			audio_steps.stop()
+			audio_playing = false
 		$DustParticles.emitting = false
 		if direction_last.x == 1:
 			animated_sprite.set_animation("idle_horizontal")

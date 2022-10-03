@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/1.png" type="Texture" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Sprites/Player/2.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Animations/DustParticles.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Audio/steps_mino.wav" type="AudioStream" id=12]
-[ext_resource path="res://Audio/steps_king.wav" type="AudioStream" id=13]
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
@@ -61,7 +60,8 @@ speed = 300
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -17 )
 frames = SubResource( 15 )
-animation = "walk_down"
+animation = "walk_horizontal"
+playing = true
 
 [node name="TimerShoot" type="Timer" parent="."]
 wait_time = 3.0
@@ -87,11 +87,9 @@ disabled = true
 [node name="DustParticles" parent="." instance=ExtResource( 11 )]
 position = Vector2( 0, 24 )
 
-[node name="AudioMino" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioSteps" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 12 )
-
-[node name="AudioKing" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 13 )
+volume_db = 1.714
 
 [connection signal="timeout" from="TimerShoot" to="." method="_on_TimerShoot_timeout"]
 [connection signal="timeout" from="TimerBuild" to="." method="_on_TimerBuild_timeout"]
