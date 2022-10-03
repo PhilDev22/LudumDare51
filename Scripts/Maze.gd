@@ -92,6 +92,7 @@ func _on_build(player_nr, position, direction_player):
 		var animation_position = wall_grid_to_local_position(grid_vec)
 		var build_animation = build_animation_path.instance()
 		build_animation.position = animation_position
+		build_animation.play()
 		add_child(build_animation)
 	
 	update_tileset_grid()
