@@ -91,6 +91,7 @@ func _on_build(player_nr, position, direction_player):
 	if add_wall_to_grid_if_allowed(grid_vec):
 		var animation_position = wall_grid_to_local_position(grid_vec)
 		var build_animation = build_animation_path.instance()
+		build_animation.position = animation_position
 		add_child(build_animation)
 	
 	update_tileset_grid()
@@ -293,7 +294,7 @@ func global_position_to_wall_grid(pos: Vector2):
 
 func wall_grid_to_local_position(grid_vec: Vector2):
 	var pos = grid_vec * $TileMapWalls.cell_size
-	pos -= $TileMapWalls.cell_size * 0.5
+	# pos -= $TileMapWalls.cell_size * 0.5
 	pos += $TileMapWalls.get_global_position()
 	return pos
 
