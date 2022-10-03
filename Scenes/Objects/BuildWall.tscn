@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Sprites/BuildWall.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Objects/BuildWallTween.gd" type="Script" id=2]
-[ext_resource path="res://Audio/stones-falling-6375.mp3" type="AudioStream" id=3]
+[ext_resource path="res://Audio/impact-109588.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Scenes/Objects/BuildWall.gd" type="Script" id=4]
 
 [sub_resource type="AtlasTexture" id=2]
@@ -51,4 +51,4 @@ script = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -6.505
+volume_db = -26.739
