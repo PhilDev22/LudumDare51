@@ -7,6 +7,8 @@ var player0
 var player1
 var ingame_ui
 
+const clouds_path = preload("res://Scenes/Objects/Clouds.tscn")
+
 const knubbel_path = preload("res://Scenes/Animations/Knubbel.tscn")
 var knubbel_exists = false
 var knubbel
@@ -79,11 +81,24 @@ func handle_game_over():
 	add_child(knubbel)
 	knubbel_exists = true
 	
+	# spawn clouds
+	var clouds = clouds_path.instance()
+	clouds.disable_ui = false
+	clouds.connect("closed", get_node("/root/UI/GameOverUI"), "_on_clouds_closed")
+	clouds.connect("closed", self, "_on_clouds_closed")
+	get_node("/root/UI").add_child(clouds)
+	
 	# remove players
 	player0.visible = false
 	player1.visible = false
 	
 	ingame_ui.visible = false
+
+
+func _on_clouds_closed():
+	knubbel.get_node("AnimatedSprite").playing = false
+	knubbel.queue_free()
+	knubbel_exists = false
 
 
 func on_player_collision():

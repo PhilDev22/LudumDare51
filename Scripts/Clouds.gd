@@ -12,6 +12,8 @@ var jitter = 15  # add jitter in range [-jitter, jitter] randomly to grid xy-pos
 signal closed
 signal finished
 
+var disable_ui = true
+
 
 func _ready():
 	get_clouds(positions[0], positions[1])
@@ -75,11 +77,12 @@ func get_clouds(pos_x, pos_y):
 
 func _on_clouds_closed():
 	emit_signal("closed")
-	get_node("/root/UI").visible = false
+	if disable_ui:
+		get_node("/root/UI").visible = false
 	
 	
 func _on_clouds_finished():
 	emit_signal("finished")
-	print("finished")
-	get_node("/root/UI").visible = true
+	if disable_ui:
+		get_node("/root/UI").visible = true
 	queue_free()
