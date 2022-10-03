@@ -8,9 +8,20 @@ onready var LabelGameOver = $LabelGameOver
 onready var LabelTime = $LabelTime
 onready var LabelTimePlayed = $LabelTimePlayed
 
+var level_base
 
 func _ready():
-	get_node("/root/LevelBase").connect("game_over", self, "on_game_over")
+	level_base = get_node("/root/LevelBase")
+	level_base.connect("game_over", self, "on_game_over")
+	set_unvisible()
+
+func _process(delta):
+	if self.visible and InputSystem.input_proceed:
+		set_unvisible()
+		level_base.restart_game()
+
+
+func set_unvisible():
 	LabelGameOver.visible = false
 	LabelTime.visible = false
 	LabelTimePlayed.visible = false
@@ -27,7 +38,7 @@ func on_game_over(play_time):
 func animate_game_over_label():
 	LabelGameOver.visible = true
 	tweenLabelGameOver.interpolate_property(LabelGameOver, "margin_top",
-			-500, 260, 0.4,
+			-500, 150, 0.4,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tweenLabelGameOver.start()
 
