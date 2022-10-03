@@ -8,6 +8,9 @@ var player1
 const knubbel_path = preload("res://Scenes/Animations/Knubbel.tscn")
 var knubbel_exists = false
 
+var play_time = 0
+var is_playing = false
+
 func _ready():
 	start_game()
 	
@@ -33,10 +36,22 @@ func start_game():
 	player1.other_player = player0
 	
 	UI.connect_signals()
+	
+	play_time = 0
+	is_playing = true
+	
 
+func _process(delta):
+	if is_playing:
+		play_time += delta
+	
+	
 func handle_game_over():
+	
+	is_playing = false
+	
 	# emit game over signal
-	emit_signal("game_over")
+	emit_signal("game_over", play_time)
 
 	# disable inputs	
 	get_node("/root/InputSystem").disable_input()

@@ -13,4 +13,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$Label.text = str(get_time_left()).substr(0, 3)
+	get_parent().get_node("LabelCountDown").text = str(get_time_left()).substr(0, 3)
