@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spikes_vertical_02.png-bdbdc8c6e09389d7ce97f7a4214ff974.stex"
+path="res://.import/gameover_background.png-af9b63b60543caa92aa414e153e2ac8e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Objects/spikes_vertical_02.png"
-dest_files=[ "res://.import/spikes_vertical_02.png-bdbdc8c6e09389d7ce97f7a4214ff974.stex" ]
+source_file="res://Sprites/gameover_background.png"
+dest_files=[ "res://.import/gameover_background.png-af9b63b60543caa92aa414e153e2ac8e.stex" ]
 
 [params]
 

@@ -78,7 +78,7 @@ position = Vector2( 969, 488 )
 scale = Vector2( 2.5, 2.5 )
 frames = SubResource( 1 )
 animation = "king"
-frame = 2
+frame = 1
 playing = true
 
 [node name="Minotaur" type="AnimatedSprite" parent="."]
@@ -86,7 +86,6 @@ position = Vector2( 782, 449 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 2 )
 animation = "minotaur"
-frame = 1
 playing = true
 
 [node name="Label" type="Label" parent="."]

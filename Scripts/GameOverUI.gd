@@ -15,6 +15,7 @@ func _ready():
 	level_base.connect("game_over", self, "on_game_over")
 	set_unvisible()
 
+
 func _process(delta):
 	if self.visible and InputSystem.input_proceed:
 		set_unvisible()
@@ -33,6 +34,8 @@ func on_game_over(play_time):
 	animate_game_over_label()
 	animate_time_label()
 	animate_time_played_label(play_time)
+	get_node("root/LevelBase/Knubbel").visible = false
+	
 	
 	
 func animate_game_over_label():
