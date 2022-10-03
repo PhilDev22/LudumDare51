@@ -152,16 +152,12 @@ func iterative_dfs():
 
 func update_wall_grid():
 	# update the wall_grid using the cells array
-	# initialize expanded cells with 100% walls + a ring of no walls
+	# initialize expanded cells with a double ring of only walls
 	wall_grid = []
 	for i in range(num_cells_x * 2 + 3):
 		wall_grid.push_back([])
 		for j in range(num_cells_y * 2 + 3):
-			if i == 0 or i == num_cells_x * 2 + 2 \
-					or j == 0 or j == num_cells_y * 2 + 2:
-				wall_grid[i].push_back(false)
-			else:
-				wall_grid[i].push_back(true)
+			wall_grid[i].push_back(true)
 			
 	# transfer information from cells to expanded cells
 	var x_exp = 2
