@@ -88,7 +88,6 @@ position = Vector2( 782, 449 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 2 )
 animation = "minotaur"
-frame = 2
 playing = true
 
 [node name="Label" type="Label" parent="."]
