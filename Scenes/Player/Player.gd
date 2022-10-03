@@ -203,9 +203,9 @@ func build(var player_nr = 0, var direction_player = Vector2(0, 1)):
 	emit_signal("action_build", player_nr, global_position, direction_player)
 	timer_build.start()
 	
-	var wall = preload("res://Scenes/Objects/BuildWall.tscn")
-	var wallInst = wall.instance()
-	add_child(wallInst)
+#	var wall = preload("res://Scenes/Objects/BuildWall.tscn")
+#	var wallInst = wall.instance()
+#	add_child(wallInst)
 	
 	
 func update_ai_direction(collision_obj = null):
