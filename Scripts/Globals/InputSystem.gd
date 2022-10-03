@@ -6,6 +6,7 @@ var input_build
 var input_build_p2
 var input_destroy
 var input_destroy_p2
+var input_proceed = false
 
 var second_player_input_prefix = "p2_"
 
@@ -16,6 +17,7 @@ func _ready():
 
 
 func _process(delta):
+	input_proceed = get_input_proceed()
 	input_direction = get_input_direction(0)
 	input_build = get_input_build(0)
 	input_destroy = get_input_destroy(0)
@@ -23,7 +25,10 @@ func _process(delta):
 	input_build_p2 = get_input_build(1)
 	input_destroy_p2 = get_input_destroy(1)
 
-
+func get_input_proceed():
+	return (Input.is_action_just_pressed("ui_accept") 
+			or Input.is_action_just_pressed("ui_select"))
+	
 func get_input_direction(var player = 0):
 	var prefix = second_player_input_prefix if player == 1 else ""
 	var horizontal = int(Input.is_action_pressed(prefix + "ui_right")) - int(Input.is_action_pressed(prefix + "ui_left"))

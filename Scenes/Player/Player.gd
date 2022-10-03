@@ -17,6 +17,8 @@ onready var timer_shoot = $TimerShoot
 onready var timer_build = $TimerBuild
 onready var build_wall = $BuildWall
 
+var level_base
+
 var velocity = Vector2()
 var direction
 var direction_action = Vector2(0, 1)
@@ -38,6 +40,7 @@ func get_class():
 	return "Player"
 	
 func _ready():
+	level_base = get_node("/root/LevelBase")
 	animated_sprite.set_animation("idle_down") 
 	animated_sprite.set_playing(true)
 	#build_wall.get_node("AnimatedSprite").hide()
@@ -50,6 +53,9 @@ func _ready():
 	
 func _physics_process(delta):
 	
+	if not level_base.is_playing:
+		return
+		
 	velocity = Vector2()
 	
 	if player_nr == 0:
@@ -63,6 +69,9 @@ func _physics_process(delta):
 	if direction:
 		direction_last = direction
 
+		$DustParticles.direction = Vector2(0, -1) if direction.x != 0 else Vector2.ZERO
+		$DustParticles.emitting = true
+
 		if direction.x == 1:
 			animated_sprite.set_animation("walk_horizontal")
 			animated_sprite.flip_h = false
@@ -73,6 +82,7 @@ func _physics_process(delta):
 			velocity.x -= 1
 			
 		if direction.y == 1:
+			$DustParticles.emitting = false
 			if direction.x == 0:
 				animated_sprite.set_animation("walk_down")
 				animated_sprite.flip_h = false
@@ -84,6 +94,7 @@ func _physics_process(delta):
 			velocity.y -= 1
 
 	if not velocity:
+		$DustParticles.emitting = false
 		if direction_last.x == 1:
 			animated_sprite.set_animation("idle_horizontal")
 			animated_sprite.flip_h = false
