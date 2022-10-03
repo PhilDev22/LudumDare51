@@ -1,6 +1,7 @@
 extends Node2D
 
 signal game_over
+signal game_started
 
 var player0
 var player1
@@ -40,7 +41,14 @@ func start_game():
 	play_time = 0
 	is_playing = true
 	
-
+	emit_signal("game_started")
+	
+	
+func restart_game():
+	play_time = 0
+	is_playing = true
+	emit_signal("game_started")
+	
 func _process(delta):
 	if is_playing:
 		play_time += delta
@@ -54,7 +62,6 @@ func handle_game_over():
 	emit_signal("game_over", play_time)
 
 	# disable inputs	
-	get_node("/root/InputSystem").disable_input()
 	
 	# stop timer
 	get_node("/root/UI/IngameUI/Timer").stop()
