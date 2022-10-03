@@ -45,6 +45,7 @@ var rng = null
 export var swiss_cheese_factor = 0.15
 
 const build_animation_path = preload("res://Scenes/Objects/BuildWall.tscn")
+const destroy_animation_path = preload("res://Scenes/Objects/ExplodeWall.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -78,7 +79,13 @@ func _on_destroy(position, velocity):
 
 	var wall_index = global_position_to_wall_grid(position)
 	
-	remove_wall_from_grid_if_allowed(wall_index)
+	if remove_wall_from_grid_if_allowed(wall_index):
+		var animation_position = wall_grid_to_local_position(wall_index)
+		var destroy_animation = destroy_animation_path.instance()
+		destroy_animation.position = animation_position
+		destroy_animation.play()
+		add_child(destroy_animation)
+	
 	update_tileset_grid()
 	update_tiles()
 	
