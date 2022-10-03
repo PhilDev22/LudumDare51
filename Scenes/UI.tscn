@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Screens/GameOverUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Audio/The Desert.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Sprites/ui_build.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/ui_shoot.png" type="Texture" id=5]
 
@@ -158,3 +159,8 @@ custom_fonts/font = SubResource( 11 )
 text = "Player 2"
 
 [node name="GameOverUI" parent="." instance=ExtResource( 2 )]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -18.233
+autoplay = true

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/The Desert.mp3-1af51134c8cbda285e736c5e0660b056.mp3str"
+
+[deps]
+
+source_file="res://Audio/The Desert.mp3"
+dest_files=[ "res://.import/The Desert.mp3-1af51134c8cbda285e736c5e0660b056.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

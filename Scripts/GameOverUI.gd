@@ -59,6 +59,7 @@ func animate_time_played_label(play_time):
 	tweenLabelTimePlayed.interpolate_property(LabelTimePlayed, "margin_top",
 			1500, 452, 0.6,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.5)
+	tweenLabelTimePlayed.connect("tween_completed", self, "_on_TweenLabelTimePlayed_tween_completed")
 	tweenLabelTimePlayed.start()
 	
 	
@@ -73,9 +74,12 @@ func animate_time_label():
 
 func _on_clouds_closed():
 	self.visible = true
+	$LabelEnter.visible = false
 	animate_game_over_label()
 	animate_time_label()
 	animate_time_played_label(time_played)
 
+	
 
-
+func _on_TweenLabelTimePlayed_tween_completed(object, key):
+	$LabelEnter.visible = true
