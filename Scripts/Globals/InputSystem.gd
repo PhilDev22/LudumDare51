@@ -35,7 +35,6 @@ func get_input_direction(var player = 0):
 	var vertical = int(Input.is_action_pressed(prefix +"ui_down")) - int(Input.is_action_pressed(prefix + "ui_up"))
 	return Vector2(horizontal, vertical)
 
-
 func get_input_build(var player = 0):
 	var prefix = second_player_input_prefix if player == 1 else ""
 	return Input.is_action_just_pressed(prefix + "build")
