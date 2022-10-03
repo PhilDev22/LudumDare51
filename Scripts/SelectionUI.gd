@@ -20,7 +20,6 @@ var player2_selection = 0 # -1 = Asterius, 1 = Theseus, 0 = none
 
 func _ready():
 	self.visible = false
-	init()
 	
 # call this when screen is shown
 func init():
