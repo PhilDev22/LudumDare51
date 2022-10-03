@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/1.png" type="Texture" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://Sprites/Player/9.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Player/3.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Player/2.png" type="Texture" id=10]
-[ext_resource path="res://Scenes/Objects/BuildWall.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
@@ -71,8 +70,6 @@ one_shot = true
 
 [node name="WeaponPosition2D" type="Position2D" parent="."]
 position = Vector2( 0, 16 )
-
-[node name="BuildWall" parent="." instance=ExtResource( 11 )]
 
 [node name="CollisionShape2DCapsule" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 12 )
