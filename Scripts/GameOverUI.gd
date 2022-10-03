@@ -10,6 +10,8 @@ onready var LabelTimePlayed = $LabelTimePlayed
 
 var level_base
 
+var time_played = 0
+
 func _ready():
 	set_unvisible()
 	
@@ -33,11 +35,7 @@ func set_unvisible():
 
 
 func on_game_over(play_time):
-	self.visible = true
-	animate_game_over_label()
-	animate_time_label()
-	animate_time_played_label(play_time)
-	# level_base.knubbel.queue_free()
+	time_played = play_time
 
 	
 func animate_game_over_label():
@@ -66,3 +64,9 @@ func animate_time_label():
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.5)
 	tweenLabelTime.start()
 	
+
+func _on_clouds_closed():
+	self.visible = true
+	animate_game_over_label()
+	animate_time_label()
+	animate_time_played_label(time_played)
