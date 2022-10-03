@@ -65,7 +65,7 @@ func _ready():
 	
 	# connect the ten second timer to the maze change method
 	# warning-ignore:return_value_discarded
-	get_node("/root/UI/IngameUI/Timer").connect("timeout", self, "change_maze")
+	get_node("/root/LevelBase/Timer").connect("timeout", self, "change_maze")
 	
 
 func _on_destroy(position, velocity):

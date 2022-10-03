@@ -68,7 +68,7 @@ func handle_game_over():
 	emit_signal("game_over", play_time)
 
 	# stop timer
-	get_node("/root/UI/IngameUI/Timer").stop()
+	get_node("Timer").stop()
 	
 	# spawn game over animation
 	var pos0 = player0.get_global_position()
