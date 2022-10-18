@@ -1,21 +1,13 @@
-# 2D Grid-based movement system
-Godot 3.1.1
+# Minotaur Rush - Submission for Ludum Dare 51
+This is a little project made for the Ludum Dare 51 game jam.
 
-## Notes
-Based off of Godot's TileMap Node.
+The game engine used is Godot 3.
+Graphics are made on our own!
 
-See Demo folder for example.
+Feel free to try it out on itch.io:
 
-## How To Use
+https://codey.itch.io/minotaurrush
 
-Instance a scene from Zones/WorldInstanceBaseScene
+Check out our submission page:
 
-All occupied cells I.E. terrain that actors cannot walk on is drawn using the tilemap "InteractiveTerrain."
-
-All non-occupied cells I.E. background tiles are drawn using the tilemap "Non-InteractiveTerrain"
-
-The final tilemap AlwaysOnTop is for non-occupied forground tiles that should always be drawn over objects (roofs, treetops, etc.)
-
-All overworld objects, actors, etc. are children of InteractiveTerrain in this example.
-
-![SampleGif](https://raw.githubusercontent.com/IconocatStudio/godot2dgridmovement/master/Demo/example.gif)
+https://ldjam.com/events/ludum-dare/51/minotaurrush
